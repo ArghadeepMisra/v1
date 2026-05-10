@@ -476,6 +476,73 @@ Follow the commit conventions from `git-workflow-and-versioning`:
 
 ---
 
+## Common Rationalizations
+
+| Rationalization | Reality |
+|---|---|
+| "The skill is fine as-is, no adaptation needed" | Every other skill in this repo follows a consistent structure. An unadapted skill breaks that consistency and confuses agents expecting the standard format. |
+| "I'll register it in README and AGENTS.md later" | Later never comes. An unregistered skill is invisible to agents. Register as part of the integration. |
+| "The mirror to .opencode/skills/ can wait" | A missing mirror means OpenCode can't discover the skill. Both directories must match before the integration is considered complete. |
+| "This skill is too small to need rationalizations or red flags" | If it's worth adding, it's worth documenting honestly. Small skills still have common failure modes. |
+| "I'll skip the conflict check, this skill is clearly unique" | Overlap isn't always obvious. Skill descriptions can trigger on the same scenarios. The conflict check prevents confusing duplicate activations. |
+| "I can just copy the SKILL.md without adapting the style" | Inconsistent style across skills forces agents to switch parsing modes mid-workflow. Adaptation is what makes a skill part of the system, not just a file in a folder. |
+
+## Red Flags
+
+- SKILL.md missing frontmatter or missing "Use when..." in description
+- Skill registered in README but not in AGENTS.md, or vice versa
+- files/ and .opencode/skills/ are out of sync after integration
+- No Beads Integration section in the adapted SKILL.md
+- No Common Rationalizations table in the adapted SKILL.md
+- No Red Flags list in the adapted SKILL.md
+- SKILL.md exceeds 500 lines without splitting into supporting files
+- Cross-references pointing to skill names or reference files that don't exist
+- Commit made without running `skill-sync.sh --check` first
+
+## Beads Integration
+
+Track skill integration work in beads:
+
+```bash
+# Create the integration epic
+bd create "Integrate: <skill-name> skill" -t epic -p 1 --json
+
+# Track each phase as a task
+bd create "Ingest & classify <skill-name>" -t task -p 1 --deps parent:<epic-id> --json
+bd create "Adapt <skill-name> to repo style" -t task -p 1 --deps parent:<epic-id> --json
+bd create "Register <skill-name> in README & AGENTS" -t task -p 2 --deps parent:<epic-id> --json
+
+# Remember integration decisions
+bd remember "Skill: <skill-name> classified as [lifecycle phase]"
+bd remember "Skill: <skill-name> has overlap with <existing-skill> — differentiated by [reason]"
+
+# Close after verification
+bd close <epic-id> --reason "Integrated: <skill-name> skill added and verified" --json
+```
+
+## Verification
+
+After completing skill integration:
+
+- [ ] `skills/<skill-name>/SKILL.md` exists with adapted content
+- [ ] `.opencode/skills/<skill-name>/SKILL.md` exists and matches
+- [ ] Frontmatter `name` matches directory name exactly
+- [ ] Frontmatter `description` includes "Use when..." trigger phrase
+- [ ] All required sections present: Overview, When to Use, Common Rationalizations, Red Flags, Beads Integration, Verification
+- [ ] Common Rationalizations table has ≥4 rows
+- [ ] Red Flags list has ≥5 items
+- [ ] Verification checklist has ≥4 items
+- [ ] README.md skills table includes the new skill in the correct lifecycle section
+- [ ] AGENTS.md Intent → Skill Mapping includes the new skill
+- [ ] AGENTS.md Lifecycle Mapping includes the new skill (if applicable)
+- [ ] Cross-references to other skills use valid kebab-case names
+- [ ] `references/` links point to existing files
+- [ ] SKILL.md is ≤500 lines (or overflow is in sibling files)
+- [ ] `bash scripts/skill-sync.sh --check` returns `{"status":"ok",...}`
+- [ ] Beads epic created and closed for the integration
+
+---
+
 ## Troubleshooting
 
 | Problem | Solution |
