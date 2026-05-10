@@ -5,3 +5,8 @@ node_modules/
 *.log
 .claude/.simplify-ignore-cache/
 .claude/sdd-cache/
+
+# Beads / Dolt files (added by bd init)
+.dolt/
+*.db
+.beads-credential-key

@@ -1,0 +1,7 @@
+{
+  "database": "dolt",
+  "backend": "dolt",
+  "dolt_mode": "embedded",
+  "dolt_database": "Orpheus",
+  "project_id": "fe28922b-7c67-42df-9be3-ab2d103c0815"
+}
