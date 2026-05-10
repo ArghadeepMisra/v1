@@ -128,33 +128,145 @@ bd remember "Auth: Use bcrypt with salt rounds 12"
 
 ---
 
-## Quick Start
+## Getting Started
 
-### 1. Install Beads
+### Prerequisites
+
+- [OpenCode](https://opencode.ai) installed and configured
+- [Beads](https://github.com/gastownhall/beads) for persistent task tracking (recommended)
+
+### Step 1: Install Beads
+
+Beads is the persistent memory layer. It tracks tasks, saves insights across sessions, and prevents context loss. While skills work without it, beads integration is strongly recommended.
 
 ```bash
+# Install the beads CLI
 curl -fsSL https://raw.githubusercontent.com/gastownhall/beads/main/scripts/install.sh | bash
+
+# Verify installation
+bd --version
 ```
 
-### 2. Initialize in Your Project
+### Step 2: Clone Agent Skills into Your Project
 
 ```bash
+# Option A: Clone directly into your project
+cd your-project
+git clone https://github.com/your-org/agent-skills.git skills
+
+# Option B: Clone elsewhere and symlink
+git clone https://github.com/your-org/agent-skills.git ~/agent-skills
+ln -s ~/agent-skills/skills your-project/skills
+ln -s ~/agent-skills/AGENTS.md your-project/AGENTS.md
+```
+
+### Step 3: Initialize Beads in Your Project
+
+```bash
+cd your-project
 bd init
 ```
 
-### 3. Verify It Works
+This creates a `.beads/` directory for persistent task tracking. Verify it works:
 
 ```bash
 bd ready --json
 ```
 
-### 4. Use with OpenCode
+You should see an empty ready queue — that means beads is working.
 
-1. Clone this repo into your project or reference it via `AGENTS.md`
-2. Ensure `skills/` directory and `AGENTS.md` are in your workspace
-3. Skills activate automatically based on what you're doing
+### Step 4: Configure OpenCode
 
-No additional configuration needed. Skills discover themselves from the `skills/` directory.
+OpenCode discovers skills automatically. Place `AGENTS.md` in your project root and ensure the `skills/` directory is present. OpenCode reads the skill descriptions at startup and loads the full `SKILL.md` only when the agent determines a skill is relevant.
+
+```yaml
+# .opencode/config.yaml (if using OpenCode config)
+# Skills are auto-discovered from the skills/ directory.
+# The .opencode/skills symlink handles mirroring automatically.
+```
+
+If your project uses the `.opencode/skills` directory convention, run the sync script:
+
+```bash
+bash scripts/skill-sync.sh --sync
+```
+
+This mirrors `skills/` into `.opencode/skills/` keeping both in sync. The sync script also supports drift detection:
+
+```bash
+bash scripts/skill-sync.sh --check
+```
+
+### Step 5: Start Working with Skills
+
+Skills activate based on what you're doing. Here's a typical workflow:
+
+```
+1. You: "I have an idea for a feature"
+   → Agent loads idea-refine
+
+2. You: "Let's spec this out"
+   → Agent loads spec-driven-development
+
+3. You: "Break this into tasks"
+   → Agent loads planning-and-task-breakdown
+
+4. You: "Let's start building"
+   → Agent loads incremental-implementation + test-driven-development
+
+5. You: "Something's broken"
+   → Agent loads debugging-and-error-recovery
+
+6. You: "Review my code"
+   → Agent loads code-review-and-quality
+
+7. You: "Ready to ship"
+   → Agent loads shipping-and-launch
+```
+
+Each skill includes a `## Lifecycle Flow` section showing which skills naturally come before and after it. You can also explicitly invoke a skill:
+
+> "Use the spec-driven-development skill for this feature."
+
+And track everything through beads:
+
+```bash
+# Create an epic for your feature
+bd create "Feature: User Authentication" -t epic -p 1 --json
+
+# Break it into tasks
+bd create "Auth: Login endpoint" -t task -p 1 --deps parent:bd-abc --json
+bd create "Auth: Registration form" -t task -p 1 --deps parent:bd-abc --json
+
+# Claim and execute
+bd update bd-def --claim --json
+# [Agent follows the skill workflow]
+bd update bd-def --notes "Slice 1 complete: login endpoint + tests"
+bd close bd-def --reason "Done" --json
+
+# Save insights for future sessions
+bd remember "Auth: Use bcrypt with salt rounds 12"
+```
+
+### Step 6: Verify Skill Setup
+
+Run the verification script for any skill to confirm your project meets its criteria:
+
+```bash
+# Check if your project follows TDD practices
+bash skills/test-driven-development/scripts/verify.sh
+
+# Check if your project has CI/CD configured
+bash skills/ci-cd-and-automation/scripts/verify.sh
+
+# Check all skills at once (from repo root)
+for skill in skills/*/scripts/verify.sh; do
+  echo "--- $(basename $(dirname $(dirname $skill))) ---"
+  bash "$skill" 2>/dev/null | python3 -m json.tool 2>/dev/null | head -3
+done
+```
+
+Each script outputs JSON with `skill`, `status` (pass/fail/partial), and a `checks` array of individual criteria.
 
 ---
 
@@ -171,13 +283,14 @@ Every skill follows the same anatomy:
 │  │ description: Guides agents through [task].│  │
 │  │              Use when…                    │  │
 │  └───────────────────────────────────────────┘  │
-│  Overview         → What this skill does        │
-│  When to Use      → Triggering conditions       │
-│  Process          → Step-by-step workflow       │
-│  Rationalizations → Excuses + rebuttals         │
-│  Red Flags        → Signs something's wrong     │
-│  Verification     → Evidence requirements       │
-│  Beads Integration→ bd commands for this skill  │
+│  Overview          → What this skill does        │
+│  Lifecycle Flow    → Phase, predecessor, next    │
+│  When to Use       → Triggering conditions       │
+│  Process           → Step-by-step workflow        │
+│  Rationalizations  → Excuses + rebuttals         │
+│  Red Flags         → Signs something's wrong      │
+│  Verification      → Evidence requirements       │
+│  Beads Integration → bd commands for this skill   │
 └─────────────────────────────────────────────────┘
 ```
 
@@ -187,6 +300,73 @@ Every skill follows the same anatomy:
 - **Anti-rationalization.** Every skill includes a table of common excuses with documented counter-arguments.
 - **Verification is non-negotiable.** Every skill ends with evidence requirements. "Seems right" is never sufficient.
 - **Progressive disclosure.** The `SKILL.md` is the entry point. Supporting references load only when needed.
+- **Lifecycle flow.** Each skill links to its predecessor and successor, forming a natural development pipeline: DEFINE → PLAN → BUILD → VERIFY → REVIEW → SHIP.
+
+### Skill Lifecycle
+
+Skills are organized across six phases. Each phase flows naturally into the next:
+
+```
+DEFINE                PLAN                  BUILD
+idea-refine ──→ spec-driven-dev ──→ planning-task-breakdown ──→ incremental-impl
+                                                                   │
+                                              test-driven-dev ←────┘
+                                              context-engineering
+                                              source-driven-dev
+                                              frontend-ui-eng
+                                              api-interface-design
+                                                                   │
+VERIFY               REVIEW                SHIP                     ▼
+browser-devtools ←─  code-review ──→ git-workflow ──→ ci-cd ──→ shipping
+debugging           code-simplification    deprecation
+                    security-hardening     documentation
+                    performance-opt
+```
+
+### Verification Scripts
+
+Every skill includes a `scripts/verify.sh` that checks whether your project meets that skill's criteria:
+
+```bash
+bash skills/{skill-name}/scripts/verify.sh [--project-dir /path/to/project]
+```
+
+Output is JSON with `skill`, `status` (pass/fail/partial), and a `checks` array:
+
+```json
+{
+  "skill": "test-driven-development",
+  "status": "partial",
+  "checks": [
+    { "name": "test_framework", "status": "pass", "detail": "Jest detected in package.json" },
+    { "name": "test_files", "status": "pass", "detail": "47 test files found" },
+    { "name": "coverage", "status": "fail", "detail": "No coverage configuration found" }
+  ]
+}
+```
+
+### Reference Materials
+
+Supplementary checklists and pattern references live in `references/` and are linked from relevant skills:
+
+| Reference | Used By |
+|-----------|---------|
+| `testing-patterns.md` | test-driven-development, incremental-implementation, ci-cd-and-automation |
+| `security-checklist.md` | security-and-hardening, ci-cd-and-automation, code-review-and-quality, shipping-and-launch |
+| `performance-checklist.md` | performance-optimization, browser-testing-with-devtools, shipping-and-launch |
+| `accessibility-checklist.md` | frontend-ui-engineering, browser-testing-with-devtools |
+| `error-handling-patterns.md` | debugging-and-error-recovery, code-review-and-quality, shipping-and-launch, context-engineering |
+
+### CI Validation
+
+The repo includes a GitHub Actions workflow (`.github/workflows/validate.yml`) that validates:
+
+- Skill directory structure (SKILL.md + scripts/)
+- Frontmatter (name + description)
+- Required sections present (Overview, When to Use, Rationalizations, Red Flags, Beads Integration, Verification, Lifecycle Flow)
+- Scripts are executable with bash shebangs
+- Skill mirror sync status
+- Reference files present
 
 ---
 
@@ -241,51 +421,18 @@ agent-skills/
 ├── README.md                          # This file
 └── .beads/                            # Beads database (auto-created)
 ```
-agent-skills/
-├── skills/                            # 21 skills + integration framework
-│   ├── idea-refine/                   #   Define
-│   ├── spec-driven-development/       #   Define
-│   ├── planning-and-task-breakdown/   #   Plan
-│   ├── incremental-implementation/    #   Build
-│   ├── test-driven-development/       #   Build
-│   ├── context-engineering/           #   Build
-│   ├── source-driven-development/     #   Build
-│   ├── frontend-ui-engineering/       #   Build
-│   ├── api-and-interface-design/      #   Build
-│   ├── browser-testing-with-devtools/ #   Verify
-│   ├── debugging-and-error-recovery/  #   Verify
-│   ├── code-review-and-quality/       #   Review
-│   ├── code-simplification/           #   Review
-│   ├── security-and-hardening/        #   Review
-│   ├── performance-optimization/      #   Review
-│   ├── git-workflow-and-versioning/   #   Ship
-│   ├── ci-cd-and-automation/          #   Ship
-│   ├── deprecation-and-migration/     #   Ship
-│   ├── documentation-and-adrs/        #   Ship
-│   ├── shipping-and-launch/           #   Ship
-│   ├── using-agent-skills/            #   Meta
-│   └── skill_add.md                   #   Meta — integration framework
-├── scripts/                           # Repo-level scripts
-│   └── skill-sync.sh                  #   Mirror sync between skills/ and .opencode/skills/
-├── references/                        # Supplementary checklists
-│   ├── testing-patterns.md
-│   ├── security-checklist.md
-│   ├── performance-checklist.md
-│   ├── accessibility-checklist.md
-│   └── error-handling-patterns.md
-├── AGENTS.md                          # OpenCode integration rules
-├── README.md                          # This file
-└── .beads/                            # Beads database (auto-created)
-```
 
 ---
 
-## Contributing
+## Adding a New Skill
 
-### Adding a New Skill
+### Quick Start
 
 ```bash
-mkdir skills/your-skill-name
+# 1. Create the skill directory
+mkdir -p skills/your-skill-name/scripts
+
+# 2. Create SKILL.md with required sections
 cat > skills/your-skill-name/SKILL.md << 'EOF'
 ---
 name: your-skill-name
@@ -295,26 +442,105 @@ description: What it does. Use when [trigger condition].
 # Your Skill Title
 
 ## Overview
+One paragraph explaining what this skill does and why it matters.
+
+## Lifecycle Flow
+**Phase:** BUILD
+**Preceded by:** [planning-and-task-breakdown](../planning-and-task-breakdown/SKILL.md)
+**Followed by:** [test-driven-development](../test-driven-development/SKILL.md)
+
 ## When to Use
+- Trigger condition 1
+- Trigger condition 2
+
 ## Process
-## Rationalizations
+1. Step one
+2. Step two
+3. Step three
+
+## Common Rationalizations
+| Rationalization | Reality |
+|---|---|
+| "I can skip this" | Here's why you can't |
+
 ## Red Flags
-## Verification
-## Beads Integration
-EOF
+- Sign something is going wrong
+
+## Verification Script
+```bash
+bash skills/your-skill-name/scripts/verify.sh [--project-dir /path/to/project]
 ```
 
-**Naming:**
-- Directory: `kebab-case`
-- File: `SKILL.md` (always uppercase)
-- Scripts: `kebab-case.sh`
+## Verification
+- [ ] Evidence requirement 1
+- [ ] Evidence requirement 2
 
-**Requirements:**
-- Keep under 500 lines
-- Include anti-rationalization table
-- Include verification checklist
-- Include beads integration section
-- Reference scripts over inline code when possible
+## Beads Integration
+```bash
+bd create "Task: description" -t task -p 1 --json
+bd update <id> --claim --json
+bd close <id> --reason "Done" --json
+```
+EOF
+
+# 3. Create the verification script
+cat > skills/your-skill-name/scripts/verify.sh << 'SCRIPT'
+#!/bin/bash
+set -e
+# Verification script for your-skill-name
+# Output: JSON with skill, status, and checks array
+
+PROJECT_DIR="."
+if [ "$1" = "--project-dir" ] && [ -n "$2" ]; then
+  PROJECT_DIR="$2"
+fi
+
+echo "Verifying your-skill-name skill..." >&2
+# Add your checks here
+echo '{"skill":"your-skill-name","status":"pass","checks":[]}'
+SCRIPT
+
+chmod +x skills/your-skill-name/scripts/verify.sh
+```
+
+### Using the skill_add Framework
+
+For adapting existing skill content from other sources, use the `skill_add.md` integration framework:
+
+```bash
+# Read the integration framework
+cat skills/skill_add.md
+```
+
+This framework walks you through: Ingest → Classify → Conflict Check → Adapt → Create & Register → Verify. It ensures new skills are consistent with existing ones and registered in all required locations (SKILL.md, README, AGENTS.md).
+
+### Naming Conventions
+
+- **Skill directory:** `kebab-case` (e.g., `database-design`)
+- **SKILL.md:** Always uppercase, always this exact filename
+- **Scripts:** `kebab-case.sh` (e.g., `verify.sh`, `deploy.sh`)
+
+### Required Sections
+
+Every SKILL.md must include:
+
+1. **Overview** — What the skill does (or How It Works for interactive skills)
+2. **Lifecycle Flow** — Phase, predecessor, and successor skills
+3. **When to Use** — Triggering conditions
+4. **Common Rationalizations** — Anti-rationalization table with rebuttals
+5. **Red Flags** — Signs something is going wrong
+6. **Beads Integration** — How to track work with `bd` commands
+7. **Verification** — Evidence requirements before marking work complete
+8. **Verification Script** — Link to the runnable verification script
+
+### Best Practices
+
+- **Keep SKILL.md under 500 lines** — put detailed reference material in `references/` files
+- **Write specific descriptions** — helps the agent know exactly when to activate the skill
+- **Use progressive disclosure** — reference supporting files that load only when needed
+- **Prefer scripts over inline code** — script execution doesn't consume context (only output does)
+- **Include anti-rationalization table** — every skill needs one, with rebuttals for common excuses to skip steps
+- **Link to reference files** — use `references/filename.md` for supplementary checklists and patterns
 
 ---
 
