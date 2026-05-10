@@ -209,6 +209,22 @@ The spec is a living document, not a one-time artifact:
 - Making architectural decisions without documenting them
 - Skipping the spec because "it's obvious what to build"
 
+## Beads Integration
+
+Track spec work in beads:
+```bash
+# Create spec epic
+bd create "Spec: [Project/Feature Name]" -t epic -p 1 \
+  --description="[Problem statement from spec]" --json
+
+# Remember key decisions
+bd remember "ADR: [Decision] - [Rationale]"
+
+# Break plan into tasks
+bd create "[Component] implementation" -t task -p 1 \
+  --deps parent:[epic-id] --json
+```
+
 ## Verification
 
 Before proceeding to implementation, confirm:

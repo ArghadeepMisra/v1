@@ -13,6 +13,16 @@ Refines raw ideas into sharp, actionable concepts worth building through structu
 2.  **Evaluate & Converge:** Cluster ideas, stress-test them, and surface hidden assumptions.
 3.  **Sharpen & Ship:** Produce a concrete markdown one-pager moving work forward.
 
+## When to Use
+
+- You have a vague idea and need to refine it into something actionable
+- You're starting a new project or feature and haven't defined requirements yet
+- You need to explore multiple directions before committing to one
+- Someone says "help me think through this" or "stress-test my plan"
+- You want to challenge assumptions and avoid premature commitment to a direction
+
+**When NOT to use:** When requirements are already clear and well-defined (use `spec-driven-development` instead), or when you're fixing a specific bug (use `debugging-and-error-recovery` instead).
+
 ## Usage
 
 This skill is primarily an interactive dialogue. Invoke it with an idea, and the agent will guide you through the process.
@@ -148,6 +158,17 @@ Ask the user if they'd like to save this to `docs/ideas/[idea-name].md` (or a lo
 - **Don't over-engineer the process.** Three phases, each doing one thing well. Resist adding steps.
 - **Don't just list ideas — tell a story.** Each variation should have a reason it exists, not just be a bullet point.
 - **Don't ignore the codebase.** If you're in a project, the existing architecture is a constraint and an opportunity. Use it.
+
+## Common Rationalizations
+
+| Rationalization | Reality |
+|---|---|
+| "I already know the answer, I just need to build it" | If you haven't explored alternatives, you don't know if it's the best answer. Divergent thinking catches blind spots. |
+| "Generating variations is a waste of time" | 5-8 variations take minutes. Building the wrong thing takes weeks. Ideation is the cheapest form of validation. |
+| "We can refine it later" | Later never comes. Ship the refined version or you'll carry ambiguity through implementation. |
+| "The first idea is usually the best" | First ideas are often the most obvious. The interesting directions emerge in variations 3-7. |
+| "Assumptions are fine to leave implicit" | Untested assumptions are the #1 killer of good ideas. Surface them or they'll surface as failures later. |
+| "I don't need to write this down" | The one-pager is the deliverable. Conversation fades; documents persist. |
 
 ### Tone
 

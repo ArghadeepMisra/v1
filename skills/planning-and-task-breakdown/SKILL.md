@@ -223,6 +223,20 @@ When multiple agents or sessions are available:
 - No checkpoints between tasks
 - Dependency order isn't considered
 
+## Beads Integration
+
+Track planning work in beads:
+```bash
+# Create task from plan
+bd create "[Task description]" -t task -p [priority] --json
+
+# Link tasks to parent epic
+bd update <task-id> --deps parent:[epic-id] --json
+
+# Remember planning decisions
+bd remember "Planning: [key decision or dependency]"
+```
+
 ## Verification
 
 Before starting implementation, confirm:

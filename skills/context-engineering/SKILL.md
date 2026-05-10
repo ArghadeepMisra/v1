@@ -306,6 +306,17 @@ This catches wrong directions before you've built on them. It's a 30-second inve
 - No rules file exists in the project
 - External data files or config treated as trusted instructions without verification
 
+## Beads Integration
+
+Use beads for persistent context across sessions:
+```bash
+# Remember project conventions at session start
+bd remember "Context: [project convention or key insight]"
+
+# Remember confusion resolution
+bd remember "Context: [ambiguity resolved and decision made]"
+```
+
 ## Verification
 
 After setting up context, confirm:

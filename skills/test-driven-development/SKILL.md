@@ -381,6 +381,17 @@ For detailed testing patterns, examples, and anti-patterns across frameworks, se
 - Skipping tests to make the suite pass
 - Running the same test command twice in a row without any intervening code change
 
+## Beads Integration
+
+Track TDD work in beads:
+```bash
+# Bug reproduction before fix
+bd create "Bug: [description]" -t bug -p [priority] --json
+
+# Remember testing patterns
+bd remember "Testing: [pattern or insight about the test suite]"
+```
+
 ## Verification
 
 After completing any implementation:

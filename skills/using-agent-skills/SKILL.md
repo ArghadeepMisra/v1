@@ -137,6 +137,64 @@ Every skill invocation follows the claim-work-complete cycle. After completing a
 
 Never let work exist only in conversation history. Beads is the source of truth. Check `bd ready` before starting any new task.
 
+## When to Use
+
+- Starting a new coding session or switching tasks
+- Unsure which skill applies to the current situation
+- When agent output quality is declining (wrong patterns, hallucinated APIs)
+- Before diving into implementation without checking which skill governs the workflow
+
+## Common Rationalizations
+
+| Rationalization | Reality |
+|---|---|
+| "I know which skill to use, I don't need to check" | Skipping skill discovery leads to missed workflows. The mapping exists because agents default to the shortest path. |
+| "Skills are optional guidelines" | Skills are workflows, not suggestions. Each one encodes hard-won process that prevents common failures. |
+| "I'll figure out the process as I go" | That's how you end up skipping specs, tests, and security reviews. Follow the skill order. |
+| "This task is too small for a skill" | If it's worth doing, it's worth doing right. Even small tasks benefit from the right workflow. |
+| "I can just implement directly" | Direct implementation skips verification, context loading, and scope discipline. The skill sequence exists to prevent exactly this shortcut. |
+| "The skills slow me down" | Skills slow you down now so you don't spend hours debugging later. Each verification step catches what guessing misses. |
+
+## Red Flags
+
+- Starting implementation without checking which skill applies
+- Skipping the spec phase because "requirements are obvious"
+- Writing code without running tests because "it looks right"
+- Making assumptions without surfacing them
+- Not claiming a beads task before starting work
+- Completing work without running the verification checklist
+- Using multiple skills but skipping the transitions between them
+- Persisting work only in conversation history, not in beads
+
+## Beads Integration
+
+Track skill usage across sessions:
+```bash
+# Claim task before starting
+bd update <task-id> --claim --json
+
+# Track progress
+bd update <task-id> --notes "Slice N complete: [what was done]"
+
+# Remember key learnings
+bd remember "Key learning from this task: [insight]"
+
+# Link discovered work
+bd create "Follow-up: [description]" -t task -p 2 \
+  --deps discovered-from:<parent-id> --json
+```
+
+## Verification
+
+After completing any task using skills:
+
+- [ ] The correct skill was identified and followed
+- [ ] Assumptions were surfaced before implementation
+- [ ] Verification steps from the skill were completed
+- [ ] Beads task was claimed, updated, and closed
+- [ ] Key learnings were persisted via `bd remember`
+- [ ] No work exists only in conversation history
+
 ## Failure Modes to Avoid
 
 These are the subtle errors that look like productivity but create problems:

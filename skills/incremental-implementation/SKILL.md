@@ -258,6 +258,27 @@ After each increment, verify:
 - Creating new utility files for one-time operations
 - Running the same build/test command twice in a row without any intervening code change
 
+## Beads Integration
+
+Track incremental implementation work in beads:
+```bash
+# Claim task before starting
+bd update <task-id> --claim --json
+
+# Track progress after each slice
+bd update <task-id> --notes "Slice N complete: [what was done]"
+
+# Link discovered work
+bd create "Discovered: [description]" -t task -p 2 \
+  --deps discovered-from:<current-task-id> --json
+
+# Close after completion
+bd close <task-id> --reason "Done" --json
+
+# Remember key insights
+bd remember "Implementation: [insight about the codebase]"
+```
+
 ## Verification
 
 After completing all increments for a task:

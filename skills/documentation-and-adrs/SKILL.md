@@ -277,6 +277,18 @@ Special consideration for AI agent context:
 - No ADRs in a project with significant architectural choices
 - Documentation that restates the code instead of explaining intent
 
+## Beads Integration
+
+Track documentation work in beads:
+```bash
+# ADR tracking
+bd create "ADR: [Decision]" -t task -p 2 --json
+bd remember "ADR-[N]: [Decision] - [Rationale]"
+
+# Link ADR to parent epic
+bd update <adr-id> --deps parent:[epic-id] --json
+```
+
 ## Verification
 
 After documenting:

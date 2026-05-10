@@ -288,6 +288,17 @@ git log --grep="validation" --oneline
 - Long-lived branches that diverge significantly from main
 - Force-pushing to shared branches
 
+## Beads Integration
+
+Track commit work in beads:
+```bash
+# Task completion
+bd update <task-id> --notes "Slice complete: [description]" --json
+
+# Remember commit conventions
+bd remember "Git: [convention or pattern established]"
+```
+
 ## Verification
 
 For every commit:

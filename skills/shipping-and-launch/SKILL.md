@@ -308,6 +308,24 @@ Every deployment needs a rollback plan before it happens:
 - Redeploy previous version: < 5 minutes
 - Database rollback: < 15 minutes
 ```
+## Beads Integration
+
+Track launch work in beads:
+```bash
+# Create launch tracking epic
+bd create "Launch: [Feature]" -t epic -p 0 --json
+
+# Create checklist sub-tasks
+bd create "Launch: Security checks" -t task -p 0 --deps parent:[launch-epic] --json
+bd create "Launch: Performance checks" -t task -p 0 --deps parent:[launch-epic] --json
+
+# Close completed checklist items
+bd close <task-id> --reason "All checks passed" --json
+
+# Remember launch patterns
+bd remember "Launch: [pattern or lesson learned]"
+```
+
 ## See Also
 
 - For security pre-launch checks, see `references/security-checklist.md`

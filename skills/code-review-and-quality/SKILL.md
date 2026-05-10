@@ -352,6 +352,24 @@ Part of code review is dependency review:
 - Review comments without severity labels — makes it unclear what's required vs optional
 - Accepting "I'll fix it later" — it never happens
 
+## Beads Integration
+
+Track review findings in beads:
+```bash
+# Critical security finding
+bd create "Security: [description]" -t bug -p 0 --json
+
+# Performance regression found in review
+bd create "Perf: [description]" -t bug -p 1 --json
+
+# Review finding linked to original work
+bd create "Review finding: [description]" -t task -p 2 \
+  --deps discovered-from:<original-task-id> --json
+
+# Remember review patterns
+bd remember "Review: [pattern or lesson learned]"
+```
+
 ## Verification
 
 After review is complete:

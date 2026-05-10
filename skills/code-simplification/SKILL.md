@@ -316,6 +316,17 @@ function UserBadge({ user }: Props) {
 - Batching many simplifications into one large, hard-to-review commit
 - Refactoring code outside the scope of the current task without being asked
 
+## Beads Integration
+
+Track simplification work in beads:
+```bash
+# Refactoring task
+bd create "Refactor: [what was simplified]" -t task -p 2 --json
+
+# Remember simplification patterns
+bd remember "Simplification: [pattern that was simplified]"
+```
+
 ## Verification
 
 After completing a simplification pass:
