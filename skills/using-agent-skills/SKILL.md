@@ -9,6 +9,12 @@ description: Discovers and invokes agent skills. Use when starting a session or 
 
 Agent Skills is a collection of engineering workflow skills organized by development phase. Each skill encodes a specific process that senior engineers follow. This meta-skill helps you discover and apply the right skill for your current task.
 
+## Lifecycle Flow
+
+**Phase:** META — used throughout all phases
+
+This skill is not part of a specific phase sequence. It governs skill discovery and invocation across the entire lifecycle, applicable at any point when you need to determine which skill applies to your current task.
+
 ## Skill Discovery
 
 When a task arrives, identify the development phase and apply the corresponding skill:
@@ -182,6 +188,12 @@ bd remember "Key learning from this task: [insight]"
 # Link discovered work
 bd create "Follow-up: [description]" -t task -p 2 \
   --deps discovered-from:<parent-id> --json
+```
+
+## Verification Script
+
+```bash
+bash skills/using-agent-skills/scripts/verify.sh [--project-dir /path/to/project]
 ```
 
 ## Verification

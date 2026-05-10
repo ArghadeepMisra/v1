@@ -9,6 +9,15 @@ description: Structures git workflow practices. Use when making any code change.
 
 Git is your safety net. Treat commits as save points, branches as sandboxes, and history as documentation. With AI agents generating code at high speed, disciplined version control is the mechanism that keeps changes manageable, reviewable, and reversible.
 
+## Lifecycle Flow
+
+**Phase:** SHIP
+
+**Preceded by:** [code-review-and-quality](../code-review-and-quality/SKILL.md)
+**Followed by:** [ci-cd-and-automation](../ci-cd-and-automation/SKILL.md)
+
+**Typical sequence:** [code-review-and-quality](../code-review-and-quality/SKILL.md) → **git-workflow-and-versioning** → [ci-cd-and-automation](../ci-cd-and-automation/SKILL.md) → [shipping-and-launch](../shipping-and-launch/SKILL.md)
+
 ## When to Use
 
 Always. Every code change flows through git.
@@ -297,6 +306,12 @@ bd update <task-id> --notes "Slice complete: [description]" --json
 
 # Remember commit conventions
 bd remember "Git: [convention or pattern established]"
+```
+
+## Verification Script
+
+```bash
+bash skills/git-workflow-and-versioning/scripts/verify.sh [--project-dir /path/to/project]
 ```
 
 ## Verification

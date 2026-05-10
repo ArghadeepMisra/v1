@@ -7,6 +7,19 @@ description: Refines ideas iteratively. Refine ideas through structured divergen
 
 Refines raw ideas into sharp, actionable concepts worth building through structured divergent and convergent thinking.
 
+## Overview
+
+The Idea Refine skill turns vague concepts into concrete, actionable proposals. It uses a three-phase process — divergent exploration, convergent evaluation, and sharp synthesis — to help you avoid premature commitment and surface hidden assumptions before building.
+
+## Lifecycle Flow
+
+**Phase:** DEFINE
+
+**Preceded by:** None — start here
+**Followed by:** [spec-driven-development](../spec-driven-development/SKILL.md)
+
+**Typical sequence:** **idea-refine** → [spec-driven-development](../spec-driven-development/SKILL.md) → [planning-and-task-breakdown](../planning-and-task-breakdown/SKILL.md) → [incremental-implementation](../incremental-implementation/SKILL.md)
+
 ## How It Works
 
 1.  **Understand & Expand (Divergent):** Restate the idea, ask sharpening questions, and generate variations.

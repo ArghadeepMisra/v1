@@ -11,6 +11,15 @@ description: Simplifies code for clarity. Use when refactoring code for clarity 
 
 Simplify code by reducing complexity while preserving exact behavior. The goal is not fewer lines — it's code that is easier to read, understand, modify, and debug. Every simplification must pass a simple test: "Would a new team member understand this faster than the original?"
 
+## Lifecycle Flow
+
+**Phase:** REVIEW
+
+**Preceded by:** [code-review-and-quality](../code-review-and-quality/SKILL.md)
+**Followed by:** [git-workflow-and-versioning](../git-workflow-and-versioning/SKILL.md)
+
+**Typical sequence:** [code-review-and-quality](../code-review-and-quality/SKILL.md) → **code-simplification** → [git-workflow-and-versioning](../git-workflow-and-versioning/SKILL.md) → [ci-cd-and-automation](../ci-cd-and-automation/SKILL.md)
+
 ## When to Use
 
 - After a feature is working and tests pass, but the implementation feels heavier than it needs to be
@@ -325,6 +334,12 @@ bd create "Refactor: [what was simplified]" -t task -p 2 --json
 
 # Remember simplification patterns
 bd remember "Simplification: [pattern that was simplified]"
+```
+
+## Verification Script
+
+```bash
+bash skills/code-simplification/scripts/verify.sh [--project-dir /path/to/project]
 ```
 
 ## Verification

@@ -1,6 +1,6 @@
 # Error Handling Patterns
 
-Quick reference for consistent error handling across the stack. Use alongside the `debugging-and-error-recovery` skill.
+Quick reference for consistent error handling across the stack. Use alongside the `debugging-and-error-recovery` and `context-engineering` skills.
 
 ## Table of Contents
 

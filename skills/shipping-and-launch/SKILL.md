@@ -9,6 +9,15 @@ description: Prepares production launches. Use when preparing to deploy to produ
 
 Ship with confidence. The goal is not just to deploy — it's to deploy safely, with monitoring in place, a rollback plan ready, and a clear understanding of what success looks like. Every launch should be reversible, observable, and incremental.
 
+## Lifecycle Flow
+
+**Phase:** SHIP
+
+**Preceded by:** [ci-cd-and-automation](../ci-cd-and-automation/SKILL.md)
+**Followed by:** None — final step
+
+**Typical sequence:** [ci-cd-and-automation](../ci-cd-and-automation/SKILL.md) → **shipping-and-launch**
+
 ## When to Use
 
 - Deploying a feature to production for the first time
@@ -351,6 +360,12 @@ bd remember "Launch: [pattern or lesson learned]"
 - No one monitoring the deploy for the first hour
 - Production environment configuration done by memory, not code
 - "It's Friday afternoon, let's ship it"
+
+## Verification Script
+
+```bash
+bash skills/shipping-and-launch/scripts/verify.sh [--project-dir /path/to/project]
+```
 
 ## Verification
 

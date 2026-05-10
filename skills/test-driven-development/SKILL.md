@@ -9,6 +9,15 @@ description: Drives development with tests. Use when implementing any logic, fix
 
 Write a failing test before writing the code that makes it pass. For bug fixes, reproduce the bug with a test before attempting a fix. Tests are proof — "seems right" is not done. A codebase with good tests is an AI agent's superpower; a codebase without tests is a liability.
 
+## Lifecycle Flow
+
+**Phase:** BUILD
+
+**Preceded by:** [incremental-implementation](../incremental-implementation/SKILL.md)
+**Followed by:** [debugging-and-error-recovery](../debugging-and-error-recovery/SKILL.md)
+
+**Typical sequence:** [incremental-implementation](../incremental-implementation/SKILL.md) → **test-driven-development** → [debugging-and-error-recovery](../debugging-and-error-recovery/SKILL.md) → [code-review-and-quality](../code-review-and-quality/SKILL.md)
+
 ## When to Use
 
 - Implementing any new logic or behavior
@@ -390,6 +399,12 @@ bd create "Bug: [description]" -t bug -p [priority] --json
 
 # Remember testing patterns
 bd remember "Testing: [pattern or insight about the test suite]"
+```
+
+## Verification Script
+
+```bash
+bash skills/test-driven-development/scripts/verify.sh [--project-dir /path/to/project]
 ```
 
 ## Verification

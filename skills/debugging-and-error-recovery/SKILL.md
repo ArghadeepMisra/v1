@@ -9,6 +9,15 @@ description: Guides systematic root-cause debugging. Use when tests fail, builds
 
 Systematic debugging with structured triage. When something breaks, stop adding features, preserve evidence, and follow a structured process to find and fix the root cause. Guessing wastes time. The triage checklist works for test failures, build errors, runtime bugs, and production incidents.
 
+## Lifecycle Flow
+
+**Phase:** VERIFY
+
+**Preceded by:** [test-driven-development](../test-driven-development/SKILL.md)
+**Followed by:** [code-review-and-quality](../code-review-and-quality/SKILL.md)
+
+**Typical sequence:** [test-driven-development](../test-driven-development/SKILL.md) → **debugging-and-error-recovery** → [code-review-and-quality](../code-review-and-quality/SKILL.md) → [git-workflow-and-versioning](../git-workflow-and-versioning/SKILL.md)
+
 ## When to Use
 
 - Tests fail after a code change
@@ -326,6 +335,12 @@ bd update <id> --claim --json
 # After fixing, close and remember
 bd close <id> --reason "Fixed: [root cause summary]" --json
 bd remember "Debug: [root cause and fix pattern]"
+```
+
+## Verification Script
+
+```bash
+bash skills/debugging-and-error-recovery/scripts/verify.sh [--project-dir /path/to/project]
 ```
 
 ## Verification

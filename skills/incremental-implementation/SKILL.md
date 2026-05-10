@@ -9,6 +9,15 @@ description: Delivers changes incrementally. Use when implementing any feature o
 
 Build in thin vertical slices — implement one piece, test it, verify it, then expand. Avoid implementing an entire feature in one pass. Each increment should leave the system in a working, testable state. This is the execution discipline that makes large features manageable.
 
+## Lifecycle Flow
+
+**Phase:** BUILD
+
+**Preceded by:** [planning-and-task-breakdown](../planning-and-task-breakdown/SKILL.md)
+**Followed by:** [test-driven-development](../test-driven-development/SKILL.md)
+
+**Typical sequence:** [planning-and-task-breakdown](../planning-and-task-breakdown/SKILL.md) → **incremental-implementation** → [test-driven-development](../test-driven-development/SKILL.md) → [debugging-and-error-recovery](../debugging-and-error-recovery/SKILL.md)
+
 ## When to Use
 
 - Implementing any multi-file change
@@ -258,6 +267,10 @@ After each increment, verify:
 - Creating new utility files for one-time operations
 - Running the same build/test command twice in a row without any intervening code change
 
+## See Also
+
+- For testing patterns for each increment, see `references/testing-patterns.md`
+
 ## Beads Integration
 
 Track incremental implementation work in beads:
@@ -277,6 +290,12 @@ bd close <task-id> --reason "Done" --json
 
 # Remember key insights
 bd remember "Implementation: [insight about the codebase]"
+```
+
+## Verification Script
+
+```bash
+bash skills/incremental-implementation/scripts/verify.sh [--project-dir /path/to/project]
 ```
 
 ## Verification

@@ -9,6 +9,15 @@ description: Optimizes application performance. Use when performance requirement
 
 Measure before optimizing. Performance work without measurement is guessing — and guessing leads to premature optimization that adds complexity without improving what matters. Profile first, identify the actual bottleneck, fix it, measure again. Optimize only what measurements prove matters.
 
+## Lifecycle Flow
+
+**Phase:** REVIEW
+
+**Preceded by:** [code-review-and-quality](../code-review-and-quality/SKILL.md)
+**Followed by:** [ci-cd-and-automation](../ci-cd-and-automation/SKILL.md)
+
+**Typical sequence:** [code-review-and-quality](../code-review-and-quality/SKILL.md) → **performance-optimization** → [ci-cd-and-automation](../ci-cd-and-automation/SKILL.md) → [shipping-and-launch](../shipping-and-launch/SKILL.md)
+
 ## When to Use
 
 - Performance requirements exist in the spec (load time budgets, response time SLAs)
@@ -349,6 +358,12 @@ bd remember "Perf: [metric] improved by [X]% via [change]"
 
 # Budget violations
 bd create "Perf: Budget exceeded" -t bug -p 0 --json
+```
+
+## Verification Script
+
+```bash
+bash skills/performance-optimization/scripts/verify.sh [--project-dir /path/to/project]
 ```
 
 ## Verification

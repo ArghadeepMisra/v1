@@ -190,3 +190,36 @@ Skills are loaded on-demand — only the skill name and description are loaded a
 - Write machine-readable output (JSON) to stdout
 - Include a cleanup trap for temp files
 - Reference the script path as `skills/{skill-name}/scripts/{script}.sh`
+
+### Verification Scripts
+
+Every skill includes a `scripts/verify.sh` that checks the automatable criteria from its Verification section:
+
+```bash
+bash skills/{skill-name}/scripts/verify.sh [--project-dir /path/to/project]
+```
+
+Output is JSON with `skill`, `status` (pass/fail/partial), and `checks` array. Run these after completing a skill workflow to confirm key criteria are met.
+
+### Required Sections
+
+Every SKILL.md must include these sections:
+
+1. **Overview** (or How It Works for interactive skills) — What the skill does
+2. **When to Use** (or Usage) — Triggering conditions
+3. **Common Rationalizations** — Anti-rationalization table with rebuttals
+4. **Red Flags** — Signs something is going wrong
+5. **Beads Integration** — How to track work with `bd` commands
+6. **Verification** — Evidence requirements before marking work complete
+7. **Lifecycle Flow** — Phase, predecessor, and successor skills
+
+### CI Validation
+
+A GitHub Actions workflow (`.github/workflows/validate.yml`) validates:
+
+- Skill directory structure (SKILL.md + scripts/)
+- Frontmatter (name + description)
+- Required sections present
+- Scripts are executable with bash shebangs
+- Skill mirror sync status
+- Reference files present

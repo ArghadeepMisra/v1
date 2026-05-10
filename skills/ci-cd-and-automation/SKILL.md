@@ -13,6 +13,15 @@ Automate quality gates so that no change reaches production without passing test
 
 **Faster is Safer:** Smaller batches and more frequent releases reduce risk, not increase it. A deployment with 3 changes is easier to debug than one with 30. Frequent releases build confidence in the release process itself.
 
+## Lifecycle Flow
+
+**Phase:** SHIP
+
+**Preceded by:** [security-and-hardening](../security-and-hardening/SKILL.md) or [performance-optimization](../performance-optimization/SKILL.md)
+**Followed by:** [shipping-and-launch](../shipping-and-launch/SKILL.md)
+
+**Typical sequence:** [security-and-hardening](../security-and-hardening/SKILL.md) → **ci-cd-and-automation** → [shipping-and-launch](../shipping-and-launch/SKILL.md)
+
 ## When to Use
 
 - Setting up a new project's CI pipeline
@@ -377,6 +386,11 @@ jobs:
 - Secrets stored in code or CI config files (not secrets manager)
 - Long CI times with no optimization effort
 
+## See Also
+
+- For test patterns to configure in CI pipelines, see `references/testing-patterns.md`
+- For security gates and pre-commit checks, see `references/security-checklist.md`
+
 ## Beads Integration
 
 Track CI/CD work in beads:
@@ -389,6 +403,12 @@ bd create "CI: [change description]" -t task -p 2 --json
 
 # Deployment issue
 bd create "Deploy: [issue]" -t bug -p 0 --json
+```
+
+## Verification Script
+
+```bash
+bash skills/ci-cd-and-automation/scripts/verify.sh [--project-dir /path/to/project]
 ```
 
 ## Verification

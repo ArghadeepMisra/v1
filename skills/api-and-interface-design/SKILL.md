@@ -9,6 +9,15 @@ description: Guides stable API and interface design. Use when designing APIs, mo
 
 Design stable, well-documented interfaces that are hard to misuse. Good interfaces make the right thing easy and the wrong thing hard. This applies to REST APIs, GraphQL schemas, module boundaries, component props, and any surface where one piece of code talks to another.
 
+## Lifecycle Flow
+
+**Phase:** BUILD
+
+**Preceded by:** [spec-driven-development](../spec-driven-development/SKILL.md)
+**Followed by:** [incremental-implementation](../incremental-implementation/SKILL.md)
+
+**Typical sequence:** [spec-driven-development](../spec-driven-development/SKILL.md) → **api-and-interface-design** → [incremental-implementation](../incremental-implementation/SKILL.md) → [test-driven-development](../test-driven-development/SKILL.md)
+
 ## When to Use
 
 - Designing new API endpoints
@@ -293,6 +302,12 @@ bd create "API: [breaking change]" -t epic -p 0 --json
 
 # Versioning decisions
 bd remember "API: [versioning decision rationale]"
+```
+
+## Verification Script
+
+```bash
+bash skills/api-and-interface-design/scripts/verify.sh [--project-dir /path/to/project]
 ```
 
 ## Verification

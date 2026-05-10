@@ -11,6 +11,15 @@ Code is a liability, not an asset. Every line of code has ongoing maintenance co
 
 Most engineering organizations are good at building things. Few are good at removing them. This skill addresses that gap.
 
+## Lifecycle Flow
+
+**Phase:** SHIP
+
+**Preceded by:** [code-review-and-quality](../code-review-and-quality/SKILL.md)
+**Followed by:** [documentation-and-adrs](../documentation-and-adrs/SKILL.md)
+
+**Typical sequence:** [code-review-and-quality](../code-review-and-quality/SKILL.md) → **deprecation-and-migration** → [documentation-and-adrs](../documentation-and-adrs/SKILL.md) → [shipping-and-launch](../shipping-and-launch/SKILL.md)
+
 ## When to Use
 
 - Replacing an old system, API, or library with a new one
@@ -206,6 +215,12 @@ bd create "Migrate: [consumer]" -t task -p 2 --json
 
 # Zombie code removal
 bd close <id> --reason "Zero active usage confirmed" --json
+```
+
+## Verification Script
+
+```bash
+bash skills/deprecation-and-migration/scripts/verify.sh [--project-dir /path/to/project]
 ```
 
 ## Verification

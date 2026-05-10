@@ -1,0 +1,137 @@
+name: Validate Skills
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate skill directory structure
+        run: |
+          errors=0
+          for skill_dir in skills/*/; do
+            skill_name=$(basename "$skill_dir")
+            if [ "$skill_name" = "skill_add.md" ]; then
+              continue
+            fi
+            if [ ! -f "$skill_dir/SKILL.md" ]; then
+              echo "ERROR: $skill_dir missing SKILL.md"
+              errors=$((errors + 1))
+            fi
+            if [ ! -d "$skill_dir/scripts" ]; then
+              echo "ERROR: $skill_dir missing scripts/ directory"
+              errors=$((errors + 1))
+            fi
+          done
+          if [ "$errors" -gt 0 ]; then
+            echo "FAIL: $errors structural errors found"
+            exit 1
+          fi
+          echo "PASS: All skill directories have SKILL.md and scripts/"
+
+      - name: Validate SKILL.md frontmatter
+        run: |
+          errors=0
+          for skill_file in skills/*/SKILL.md; do
+            skill_name=$(basename "$(dirname "$skill_file")")
+            if ! head -1 "$skill_file" | grep -q '^---$'; then
+              echo "ERROR: $skill_name SKILL.md missing opening frontmatter delimiter"
+              errors=$((errors + 1))
+            fi
+            name_count=$(grep -c '^name:' "$skill_file" 2>/dev/null || echo 0)
+            if [ "$name_count" -eq 0 ]; then
+              echo "ERROR: $skill_name SKILL.md missing 'name' in frontmatter"
+              errors=$((errors + 1))
+            fi
+            desc_count=$(grep -c '^description:' "$skill_file" 2>/dev/null || echo 0)
+            if [ "$desc_count" -eq 0 ]; then
+              echo "ERROR: $skill_name SKILL.md missing 'description' in frontmatter"
+              errors=$((errors + 1))
+            fi
+          done
+          if [ "$errors" -gt 0 ]; then
+            echo "FAIL: $errors frontmatter errors found"
+            exit 1
+          fi
+          echo "PASS: All SKILL.md files have valid frontmatter"
+
+      - name: Validate required sections
+        run: |
+          required_sections="Overview|When to Use|Common Rationalizations|Rationalizations|Anti-Rationalization|Red Flags|Beads Integration|Verification"
+          errors=0
+          for skill_file in skills/*/SKILL.md; do
+            skill_name=$(basename "$(dirname "$skill_file")")
+            for section in "Overview" "When to Use" "Red Flags" "Beads Integration" "Verification"; do
+              if ! grep -q "## .*$section" "$skill_file"; then
+                echo "ERROR: $skill_name missing section '## $section'"
+                errors=$((errors + 1))
+              fi
+            done
+            if ! grep -qE "## (Common Rationalizations|Rationalizations|Anti-Rationalization)" "$skill_file"; then
+              echo "ERROR: $skill_name missing rationalizations section"
+              errors=$((errors + 1))
+            fi
+          done
+          if [ "$errors" -gt 0 ]; then
+            echo "FAIL: $errors section errors found"
+            exit 1
+          fi
+          echo "PASS: All SKILL.md files have required sections"
+
+      - name: Validate SKILL.md line count
+        run: |
+          errors=0
+          for skill_file in skills/*/SKILL.md; do
+            skill_name=$(basename "$(dirname "$skill_file")")
+            lines=$(wc -l < "$skill_file")
+            if [ "$lines" -gt 600 ]; then
+              echo "WARN: $skill_name SKILL.md is $lines lines (recommended: under 500)"
+            fi
+          done
+          echo "Line count check complete (warnings only)"
+
+      - name: Validate scripts are executable
+        run: |
+          errors=0
+          for script in skills/*/scripts/*.sh; do
+            if [ ! -x "$script" ]; then
+              echo "ERROR: $script is not executable"
+              errors=$((errors + 1))
+            fi
+            if ! head -1 "$script" | grep -q '^#!/bin/bash'; then
+              echo "ERROR: $script missing bash shebang"
+              errors=$((errors + 1))
+            fi
+          done
+          if [ "$errors" -gt 0 ]; then
+            echo "FAIL: $errors script errors found"
+            exit 1
+          fi
+          echo "PASS: All scripts are executable with proper shebangs"
+
+      - name: Run skill-sync check
+        run: |
+          if [ -L ".opencode/skills" ]; then
+            echo "PASS: .opencode/skills is a symlink (always in sync)"
+          elif [ -d ".opencode/skills" ]; then
+            bash scripts/skill-sync.sh --check
+          else
+            echo "WARN: .opencode/skills not found"
+          fi
+
+      - name: Validate reference files
+        run: |
+          errors=0
+          for ref in references/*.md; do
+            if [ ! -f "$ref" ]; then
+              echo "ERROR: Missing reference file $ref"
+              errors=$((errors + 1))
+            fi
+          done
+          echo "PASS: All reference files present"

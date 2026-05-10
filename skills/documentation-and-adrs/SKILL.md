@@ -9,6 +9,15 @@ description: Records decisions and documentation. Use when making architectural 
 
 Document decisions, not just code. The most valuable documentation captures the *why* — the context, constraints, and trade-offs that led to a decision. Code shows *what* was built; documentation explains *why it was built this way* and *what alternatives were considered*. This context is essential for future humans and agents working in the codebase.
 
+## Lifecycle Flow
+
+**Phase:** SHIP
+
+**Preceded by:** [deprecation-and-migration](../deprecation-and-migration/SKILL.md)
+**Followed by:** [shipping-and-launch](../shipping-and-launch/SKILL.md)
+
+**Typical sequence:** [deprecation-and-migration](../deprecation-and-migration/SKILL.md) → **documentation-and-adrs** → [shipping-and-launch](../shipping-and-launch/SKILL.md)
+
 ## When to Use
 
 - Making a significant architectural decision
@@ -287,6 +296,12 @@ bd remember "ADR-[N]: [Decision] - [Rationale]"
 
 # Link ADR to parent epic
 bd update <adr-id> --deps parent:[epic-id] --json
+```
+
+## Verification Script
+
+```bash
+bash skills/documentation-and-adrs/scripts/verify.sh [--project-dir /path/to/project]
 ```
 
 ## Verification

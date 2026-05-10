@@ -9,6 +9,15 @@ description: Hardens code against vulnerabilities. Use when handling user input,
 
 Security-first development practices for web applications. Treat every external input as hostile, every secret as sacred, and every authorization check as mandatory. Security isn't a phase — it's a constraint on every line of code that touches user data, authentication, or external systems.
 
+## Lifecycle Flow
+
+**Phase:** REVIEW
+
+**Preceded by:** [code-review-and-quality](../code-review-and-quality/SKILL.md)
+**Followed by:** [ci-cd-and-automation](../ci-cd-and-automation/SKILL.md)
+
+**Typical sequence:** [code-review-and-quality](../code-review-and-quality/SKILL.md) → **security-and-hardening** → [ci-cd-and-automation](../ci-cd-and-automation/SKILL.md) → [shipping-and-launch](../shipping-and-launch/SKILL.md)
+
 ## When to Use
 
 - Building anything that accepts user input
@@ -348,6 +357,12 @@ bd remember "Security: [finding and mitigation]"
 
 # Vulnerability fix
 bd close <id> --reason "Patched: [CVE/description]" --json
+```
+
+## Verification Script
+
+```bash
+bash skills/security-and-hardening/scripts/verify.sh [--project-dir /path/to/project]
 ```
 
 ## Verification

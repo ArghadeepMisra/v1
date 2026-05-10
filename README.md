@@ -196,6 +196,54 @@ Every skill follows the same anatomy:
 agent-skills/
 ├── skills/                            # 21 skills + integration framework
 │   ├── idea-refine/                   #   Define
+│   │   ├── SKILL.md
+│   │   └── scripts/idea-refine.sh
+│   ├── spec-driven-development/       #   Define
+│   │   ├── SKILL.md
+│   │   └── scripts/verify.sh
+│   ├── planning-and-task-breakdown/   #   Plan
+│   │   ├── SKILL.md
+│   │   └── scripts/verify.sh
+│   ├── incremental-implementation/    #   Build
+│   │   ├── SKILL.md
+│   │   └── scripts/verify.sh
+│   ├── test-driven-development/       #   Build
+│   │   ├── SKILL.md
+│   │   └── scripts/verify.sh
+│   ├── context-engineering/           #   Build
+│   ├── source-driven-development/     #   Build
+│   ├── frontend-ui-engineering/       #   Build
+│   ├── api-and-interface-design/      #   Build
+│   ├── browser-testing-with-devtools/ #   Verify
+│   ├── debugging-and-error-recovery/  #   Verify
+│   ├── code-review-and-quality/       #   Review
+│   ├── code-simplification/           #   Review
+│   ├── security-and-hardening/        #   Review
+│   ├── performance-optimization/      #   Review
+│   ├── git-workflow-and-versioning/   #   Ship
+│   ├── ci-cd-and-automation/          #   Ship
+│   ├── deprecation-and-migration/     #   Ship
+│   ├── documentation-and-adrs/        #   Ship
+│   ├── shipping-and-launch/           #   Ship
+│   ├── using-agent-skills/            #   Meta
+│   └── skill_add.md                   #   Meta — integration framework
+├── scripts/                           # Repo-level scripts
+│   └── skill-sync.sh                  #   Mirror sync between skills/ and .opencode/skills/
+├── references/                        # Supplementary checklists
+│   ├── testing-patterns.md
+│   ├── security-checklist.md
+│   ├── performance-checklist.md
+│   ├── accessibility-checklist.md
+│   └── error-handling-patterns.md
+├── .github/workflows/                 # CI pipeline
+│   └── validate.yml                   #   Validate skill structure, frontmatter, sections, scripts
+├── AGENTS.md                          # OpenCode integration rules
+├── README.md                          # This file
+└── .beads/                            # Beads database (auto-created)
+```
+agent-skills/
+├── skills/                            # 21 skills + integration framework
+│   ├── idea-refine/                   #   Define
 │   ├── spec-driven-development/       #   Define
 │   ├── planning-and-task-breakdown/   #   Plan
 │   ├── incremental-implementation/    #   Build

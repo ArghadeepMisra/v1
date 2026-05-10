@@ -9,6 +9,15 @@ description: Tests in real browsers. Use when building or debugging anything tha
 
 Use Chrome DevTools MCP to give your agent eyes into the browser. This bridges the gap between static code analysis and live browser execution — the agent can see what the user sees, inspect the DOM, read console logs, analyze network requests, and capture performance data. Instead of guessing what's happening at runtime, verify it.
 
+## Lifecycle Flow
+
+**Phase:** VERIFY
+
+**Preceded by:** [frontend-ui-engineering](../frontend-ui-engineering/SKILL.md)
+**Followed by:** [code-review-and-quality](../code-review-and-quality/SKILL.md)
+
+**Typical sequence:** [frontend-ui-engineering](../frontend-ui-engineering/SKILL.md) → **browser-testing-with-devtools** → [code-review-and-quality](../code-review-and-quality/SKILL.md) → [git-workflow-and-versioning](../git-workflow-and-versioning/SKILL.md)
+
 ## When to Use
 
 - Building or modifying anything that renders in a browser
@@ -288,6 +297,11 @@ A production-quality page should have **zero** console errors and warnings. If t
 - Running JavaScript that makes external network requests from the page
 - Hidden DOM elements containing instruction-like text not flagged to the user
 
+## See Also
+
+- For accessibility checks to run in the browser, see `references/accessibility-checklist.md`
+- For performance profiling targets, see `references/performance-checklist.md`
+
 ## Beads Integration
 
 Track browser work in beads:
@@ -300,6 +314,12 @@ bd remember "Browser: [error pattern] solution"
 
 # Visual regression
 bd create "UI: [regression]" -t bug -p 1 --json
+```
+
+## Verification Script
+
+```bash
+bash skills/browser-testing-with-devtools/scripts/verify.sh [--project-dir /path/to/project]
 ```
 
 ## Verification

@@ -9,6 +9,15 @@ description: Grounds every implementation decision in official documentation. Us
 
 Every framework-specific code decision must be backed by official documentation. Don't implement from memory — verify, cite, and let the user see your sources. Training data goes stale, APIs get deprecated, best practices evolve. This skill ensures the user gets code they can trust because every pattern traces back to an authoritative source they can check.
 
+## Lifecycle Flow
+
+**Phase:** BUILD
+
+**Preceded by:** [planning-and-task-breakdown](../planning-and-task-breakdown/SKILL.md)
+**Followed by:** [incremental-implementation](../incremental-implementation/SKILL.md)
+
+**Typical sequence:** [planning-and-task-breakdown](../planning-and-task-breakdown/SKILL.md) → **source-driven-development** → [incremental-implementation](../incremental-implementation/SKILL.md) → [test-driven-development](../test-driven-development/SKILL.md)
+
 ## When to Use
 
 - The user wants code that follows current best practices for a given framework
@@ -192,6 +201,12 @@ bd remember "Docs: [framework] [pattern] verified at [URL]"
 
 # Unverified pattern
 bd create "Docs: Verify [pattern]" -t task -p 3 --json
+```
+
+## Verification Script
+
+```bash
+bash skills/source-driven-development/scripts/verify.sh [--project-dir /path/to/project]
 ```
 
 ## Verification

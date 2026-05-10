@@ -9,6 +9,15 @@ description: Breaks work into ordered tasks. Use when you have a spec or clear r
 
 Decompose work into small, verifiable tasks with explicit acceptance criteria. Good task breakdown is the difference between an agent that completes work reliably and one that produces a tangled mess. Every task should be small enough to implement, test, and verify in a single focused session.
 
+## Lifecycle Flow
+
+**Phase:** PLAN
+
+**Preceded by:** [spec-driven-development](../spec-driven-development/SKILL.md)
+**Followed by:** [incremental-implementation](../incremental-implementation/SKILL.md)
+
+**Typical sequence:** [spec-driven-development](../spec-driven-development/SKILL.md) → **planning-and-task-breakdown** → [incremental-implementation](../incremental-implementation/SKILL.md) → [test-driven-development](../test-driven-development/SKILL.md)
+
 ## When to Use
 
 - You have a spec and need to break it into implementable units
@@ -235,6 +244,12 @@ bd update <task-id> --deps parent:[epic-id] --json
 
 # Remember planning decisions
 bd remember "Planning: [key decision or dependency]"
+```
+
+## Verification Script
+
+```bash
+bash skills/planning-and-task-breakdown/scripts/verify.sh [--project-dir /path/to/project]
 ```
 
 ## Verification

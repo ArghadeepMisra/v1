@@ -11,6 +11,15 @@ Multi-dimensional code review with quality gates. Every change gets reviewed bef
 
 **The approval standard:** Approve a change when it definitely improves overall code health, even if it isn't perfect. Perfect code doesn't exist — the goal is continuous improvement. Don't block a change because it isn't exactly how you would have written it. If it improves the codebase and follows the project's conventions, approve it.
 
+## Lifecycle Flow
+
+**Phase:** REVIEW
+
+**Preceded by:** [debugging-and-error-recovery](../debugging-and-error-recovery/SKILL.md)
+**Followed by:** [git-workflow-and-versioning](../git-workflow-and-versioning/SKILL.md)
+
+**Typical sequence:** [debugging-and-error-recovery](../debugging-and-error-recovery/SKILL.md) → **code-review-and-quality** → [git-workflow-and-versioning](../git-workflow-and-versioning/SKILL.md) → [ci-cd-and-automation](../ci-cd-and-automation/SKILL.md)
+
 ## When to Use
 
 - Before merging any PR or change
@@ -368,6 +377,12 @@ bd create "Review finding: [description]" -t task -p 2 \
 
 # Remember review patterns
 bd remember "Review: [pattern or lesson learned]"
+```
+
+## Verification Script
+
+```bash
+bash skills/code-review-and-quality/scripts/verify.sh [--project-dir /path/to/project]
 ```
 
 ## Verification

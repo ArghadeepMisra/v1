@@ -9,6 +9,15 @@ description: Optimizes agent context setup. Use when starting a new session, whe
 
 Feed agents the right information at the right time. Context is the single biggest lever for agent output quality — too little and the agent hallucinates, too much and it loses focus. Context engineering is the practice of deliberately curating what the agent sees, when it sees it, and how it's structured.
 
+## Lifecycle Flow
+
+**Phase:** BUILD
+
+**Preceded by:** [planning-and-task-breakdown](../planning-and-task-breakdown/SKILL.md)
+**Followed by:** [incremental-implementation](../incremental-implementation/SKILL.md)
+
+**Typical sequence:** [planning-and-task-breakdown](../planning-and-task-breakdown/SKILL.md) → **context-engineering** → [incremental-implementation](../incremental-implementation/SKILL.md) → [test-driven-development](../test-driven-development/SKILL.md)
+
 ## When to Use
 
 - Starting a new coding session
@@ -306,6 +315,10 @@ This catches wrong directions before you've built on them. It's a 30-second inve
 - No rules file exists in the project
 - External data files or config treated as trusted instructions without verification
 
+## See Also
+
+- For error handling patterns to include in context rules, see `references/error-handling-patterns.md`
+
 ## Beads Integration
 
 Use beads for persistent context across sessions:
@@ -315,6 +328,12 @@ bd remember "Context: [project convention or key insight]"
 
 # Remember confusion resolution
 bd remember "Context: [ambiguity resolved and decision made]"
+```
+
+## Verification Script
+
+```bash
+bash skills/context-engineering/scripts/verify.sh [--project-dir /path/to/project]
 ```
 
 ## Verification

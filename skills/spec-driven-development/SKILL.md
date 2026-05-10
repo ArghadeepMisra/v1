@@ -9,6 +9,15 @@ description: Creates specs before coding. Use when starting a new project, featu
 
 Write a structured specification before writing any code. The spec is the shared source of truth between you and the human engineer — it defines what we're building, why, and how we'll know it's done. Code without a spec is guessing.
 
+## Lifecycle Flow
+
+**Phase:** DEFINE
+
+**Preceded by:** [idea-refine](../idea-refine/SKILL.md)
+**Followed by:** [planning-and-task-breakdown](../planning-and-task-breakdown/SKILL.md)
+
+**Typical sequence:** [idea-refine](../idea-refine/SKILL.md) → **spec-driven-development** → [planning-and-task-breakdown](../planning-and-task-breakdown/SKILL.md) → [incremental-implementation](../incremental-implementation/SKILL.md)
+
 ## When to Use
 
 - Starting a new project or feature
@@ -223,6 +232,12 @@ bd remember "ADR: [Decision] - [Rationale]"
 # Break plan into tasks
 bd create "[Component] implementation" -t task -p 1 \
   --deps parent:[epic-id] --json
+```
+
+## Verification Script
+
+```bash
+bash skills/spec-driven-development/scripts/verify.sh [--project-dir /path/to/project]
 ```
 
 ## Verification
