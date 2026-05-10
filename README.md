@@ -2,143 +2,159 @@
 
 **Production-grade engineering skills for AI coding agents.**
 
-Skills encode the workflows, quality gates, and best practices that senior engineers use when building software. These ones are packaged so AI agents follow them consistently across every phase of development.
+20 structured workflows that encode how senior software engineers actually build software. From refining a vague idea to shipping with confidence — every skill includes steps, verification gates, anti-rationalization tables, and **persistent memory via beads**.
+
+No more lost context between sessions. No more "what were we working on?" No more markdown TODOs that vanish when the context resets.
+
+---
+
+## The Problem
+
+AI coding agents default to the shortest path. That usually means skipping specs, writing tests after the fact, ignoring security reviews, and shipping without rollback plans. It works for prototypes. It fails for production.
+
+Agent Skills fixes this by giving agents **structured workflows** that enforce the same discipline senior engineers bring to real code. Each skill is a step-by-step process with checkpoints, exit criteria, and a table of common excuses agents use to skip steps — with documented counter-arguments.
+
+---
+
+## What's Inside
+
+20 skills organized across the full development lifecycle:
+
+### Define — Figure out what to build
+| Skill | What It Does |
+|-------|-------------|
+| [idea-refine](skills/idea-refine/SKILL.md) | Structured divergent/convergent thinking to turn vague concepts into concrete proposals |
+| [spec-driven-development](skills/spec-driven-development/SKILL.md) | Write a PRD covering objectives, commands, structure, code style, testing, and boundaries before any code |
+
+### Plan — Break it down
+| Skill | What It Does |
+|-------|-------------|
+| [planning-and-task-breakdown](skills/planning-and-task-breakdown/SKILL.md) | Decompose specs into small, verifiable tasks with acceptance criteria and dependency ordering |
+
+### Build — Write the code
+| Skill | What It Does |
+|-------|-------------|
+| [incremental-implementation](skills/incremental-implementation/SKILL.md) | Thin vertical slices — implement, test, verify, commit. Feature flags, safe defaults, rollback-friendly |
+| [test-driven-development](skills/test-driven-development/SKILL.md) | Red-Green-Refactor, test pyramid (80/15/5), test sizes, DAMP over DRY, Beyonce Rule |
+| [context-engineering](skills/context-engineering/SKILL.md) | Feed agents the right information at the right time — rules files, context packing, MCP integrations |
+| [source-driven-development](skills/source-driven-development/SKILL.md) | Ground every framework decision in official documentation — verify, cite sources, flag what's unverified |
+| [frontend-ui-engineering](skills/frontend-ui-engineering/SKILL.md) | Component architecture, design systems, state management, responsive design, WCAG 2.1 AA accessibility |
+| [api-and-interface-design](skills/api-and-interface-design/SKILL.md) | Contract-first design, Hyrum's Law, One-Version Rule, error semantics, boundary validation |
+
+### Verify — Prove it works
+| Skill | What It Does |
+|-------|-------------|
+| [browser-testing-with-devtools](skills/browser-testing-with-devtools/SKILL.md) | Chrome DevTools MCP for live runtime data — DOM, console, network, performance |
+| [debugging-and-error-recovery](skills/debugging-and-error-recovery/SKILL.md) | Five-step triage: reproduce, localize, reduce, fix, guard. Stop-the-line rule |
+
+### Review — Quality gates before merge
+| Skill | What It Does |
+|-------|-------------|
+| [code-review-and-quality](skills/code-review-and-quality/SKILL.md) | Five-axis review, change sizing (~100 lines), severity labels, review speed norms |
+| [code-simplification](skills/code-simplification/SKILL.md) | Chesterton's Fence, Rule of 500, reduce complexity while preserving exact behavior |
+| [security-and-hardening](skills/security-and-hardening/SKILL.md) | OWASP Top 10 prevention, auth patterns, secrets management, dependency auditing |
+| [performance-optimization](skills/performance-optimization/SKILL.md) | Measure-first — Core Web Vitals targets, profiling, bundle analysis, anti-pattern detection |
+
+### Ship — Deploy with confidence
+| Skill | What It Does |
+|-------|-------------|
+| [git-workflow-and-versioning](skills/git-workflow-and-versioning/SKILL.md) | Trunk-based development, atomic commits, change sizing, commit-as-save-point |
+| [ci-cd-and-automation](skills/ci-cd-and-automation/SKILL.md) | Shift Left, Faster is Safer, feature flags, quality gate pipelines |
+| [deprecation-and-migration](skills/deprecation-and-migration/SKILL.md) | Code-as-liability mindset, compulsory vs advisory deprecation, zombie code removal |
+| [documentation-and-adrs](skills/documentation-and-adrs/SKILL.md) | Architecture Decision Records, API docs, inline documentation — document the *why* |
+| [shipping-and-launch](skills/shipping-and-launch/SKILL.md) | Pre-launch checklists, feature flag lifecycle, staged rollouts, rollback procedures |
+
+---
+
+## Why This Is Different: Beads Integration
+
+Most skill packs give agents workflows but no memory. Start a new session and the agent forgets what you were building. Create a task list in markdown and it gets lost in context compaction.
+
+**Agent Skills + Beads = Persistent, Traceable Engineering**
+
+[beads](https://github.com/gastownhall/beads) is a versioned issue tracker built on Dolt. Every skill in this pack automatically creates, updates, and closes beads issues as part of its workflow. Here's what that means in practice:
+
+### What Beads Gives You
+
+- **Persistent memory across sessions** — `bd remember "Always use Zod for validation"` survives context resets
+- **Discoverable work** — `bd ready --json` shows exactly what's unblocked and ready to work on
+- **Claimed tasks** — `bd update <id> --claim` prevents two agents from duplicating work
+- **Full traceability** — every task has a lifecycle from creation to close with notes, dependencies, and insights
+- **No markdown TODOs** — tasks live in a queryable database, not fragile text files
+
+### How It Works
 
 ```
-  DEFINE          PLAN           BUILD          VERIFY         REVIEW          SHIP
- ┌──────┐      ┌──────┐      ┌──────┐      ┌──────┐      ┌──────┐      ┌──────┐
- │ Idea │ ───▶ │ Spec │ ───▶ │ Code │ ───▶ │ Test │ ───▶ │  QA  │ ───▶ │  Go  │
- │Refine│      │  PRD │      │ Impl │      │Debug │      │ Gate │      │ Live │
- └──────┘      └──────┘      └──────┘      └──────┘      └──────┘      └──────┘
+1. bd prime           → Load project memory and recent context
+2. bd ready --json    → See what's ready to work on
+3. bd update --claim  → Lock the task
+4. [Execute skill]    → Follow the workflow
+5. bd remember        → Save key learnings
+6. bd close           → Mark complete
 ```
 
-Skills activate automatically based on what you're doing — designing an API triggers `api-and-interface-design`, building UI triggers `frontend-ui-engineering`, and so on.
+### Example: Building a Feature
+
+```bash
+# 1. Create the spec epic
+bd create "Spec: User Authentication" -t epic -p 1 --json
+
+# 2. Break into tasks
+bd create "Auth: Login endpoint" -t task -p 1 --deps parent:bd-abc --json
+bd create "Auth: Registration form" -t task -p 1 --deps parent:bd-abc --json
+
+# 3. Claim and build
+bd update bd-def --claim --json
+# [Follow incremental-implementation skill]
+bd update bd-def --notes "Slice 1 complete: login endpoint + tests"
+bd close bd-def --reason "Done" --json
+bd remember "Auth: Use bcrypt with salt rounds 12"
+```
+
+### Anti-Rationalization
+
+| Wrong Thought | Reality |
+|--------------|---------|
+| "I'll track this in my head" | Context windows are finite. Beads persists across sessions. |
+| "Markdown TODOs are faster" | They're invisible to other agents and lost on context reset. |
+| "This is too small for beads" | If it's worth doing, it's worth tracking. Use `-t chore -p 3`. |
+| "I'll add it to beads later" | Later never comes. Create the issue before starting work. |
 
 ---
 
 ## Quick Start
 
-**OpenCode**
-
-Uses agent-driven skill execution via `AGENTS.md` and the `skill` tool.
-
-1. Clone the repository:
+### 1. Install Beads
 
 ```bash
-git clone https://github.com/addyosmani/agent-skills.git
+curl -fsSL https://raw.githubusercontent.com/gastownhall/beads/main/scripts/install.sh | bash
 ```
 
-2. Open the project in OpenCode.
-
-3. Ensure the following files are present in your workspace:
-
-- `AGENTS.md` (root)
-- `skills/` directory
-
-No additional installation is required. Skills are discovered automatically from the `skills/` directory.
-
----
-
-## Beads Setup (Required)
-
-This skill pack requires **bd (beads)** for persistent task tracking. Every skill automatically creates, updates, and closes beads issues as part of its workflow.
-
-### Installation
+### 2. Initialize in Your Project
 
 ```bash
-# Install beads CLI
-curl -fsSL https://raw.githubusercontent.com/gastownhall/beads/main/scripts/install.sh | bash
-
-# Initialize in your project
 bd init
 ```
 
-### How It Works
+### 3. Verify It Works
 
-1. **Discover work:** `bd ready --json` shows unblocked tasks
-2. **Claim task:** `bd update <id> --claim` locks it for you
-3. **Execute skill:** Follow the skill workflow (spec → plan → build → verify → review → ship)
-4. **Persist insights:** `bd remember "key learning"` saves context across sessions
-5. **Complete:** `bd close <id> --reason "Done"` marks it finished
+```bash
+bd ready --json
+```
 
-### Why Beads + Skills?
+### 4. Use with OpenCode
 
-Skills encode the *how* (workflows, quality gates, anti-patterns). Beads provides the *what* and *when* (what needs doing, what depends on what, what's already done). Together they create a fully traceable, persistent engineering system that survives session resets and enables multi-agent coordination.
+1. Clone this repo into your project or reference it via `AGENTS.md`
+2. Ensure `skills/` directory and `AGENTS.md` are in your workspace
+3. Skills activate automatically based on what you're doing
 
----
-
-## All 20 Skills
-
-The development lifecycle is encoded implicitly. Under the hood, tasks activate these 20 skills — each one a structured workflow with steps, verification gates, and anti-rationalization tables. You can also reference any skill directly.
-
-### Define - Clarify what to build
-
-| Skill | What It Does | Use When |
-|-------|-------------|----------|
-| [idea-refine](skills/idea-refine/SKILL.md) | Structured divergent/convergent thinking to turn vague ideas into concrete proposals | You have a rough concept that needs exploration |
-| [spec-driven-development](skills/spec-driven-development/SKILL.md) | Write a PRD covering objectives, commands, structure, code style, testing, and boundaries before any code | Starting a new project, feature, or significant change |
-
-### Plan - Break it down
-
-| Skill | What It Does | Use When |
-|-------|-------------|----------|
-| [planning-and-task-breakdown](skills/planning-and-task-breakdown/SKILL.md) | Decompose specs into small, verifiable tasks with acceptance criteria and dependency ordering | You have a spec and need implementable units |
-
-### Build - Write the code
-
-| Skill | What It Does | Use When |
-|-------|-------------|----------|
-| [incremental-implementation](skills/incremental-implementation/SKILL.md) | Thin vertical slices - implement, test, verify, commit. Feature flags, safe defaults, rollback-friendly changes | Any change touching more than one file |
-| [test-driven-development](skills/test-driven-development/SKILL.md) | Red-Green-Refactor, test pyramid (80/15/5), test sizes, DAMP over DRY, Beyonce Rule, browser testing | Implementing logic, fixing bugs, or changing behavior |
-| [context-engineering](skills/context-engineering/SKILL.md) | Feed agents the right information at the right time - rules files, context packing, MCP integrations | Starting a session, switching tasks, or when output quality drops |
-| [source-driven-development](skills/source-driven-development/SKILL.md) | Ground every framework decision in official documentation - verify, cite sources, flag what's unverified | You want authoritative, source-cited code for any framework or library |
-| [frontend-ui-engineering](skills/frontend-ui-engineering/SKILL.md) | Component architecture, design systems, state management, responsive design, WCAG 2.1 AA accessibility | Building or modifying user-facing interfaces |
-| [api-and-interface-design](skills/api-and-interface-design/SKILL.md) | Contract-first design, Hyrum's Law, One-Version Rule, error semantics, boundary validation | Designing APIs, module boundaries, or public interfaces |
-
-### Verify - Prove it works
-
-| Skill | What It Does | Use When |
-|-------|-------------|----------|
-| [browser-testing-with-devtools](skills/browser-testing-with-devtools/SKILL.md) | Chrome DevTools MCP for live runtime data - DOM inspection, console logs, network traces, performance profiling | Building or debugging anything that runs in a browser |
-| [debugging-and-error-recovery](skills/debugging-and-error-recovery/SKILL.md) | Five-step triage: reproduce, localize, reduce, fix, guard. Stop-the-line rule, safe fallbacks | Tests fail, builds break, or behavior is unexpected |
-
-### Review - Quality gates before merge
-
-| Skill | What It Does | Use When |
-|-------|-------------|----------|
-| [code-review-and-quality](skills/code-review-and-quality/SKILL.md) | Five-axis review, change sizing (~100 lines), severity labels (Nit/Optional/FYI), review speed norms, splitting strategies | Before merging any change |
-| [code-simplification](skills/code-simplification/SKILL.md) | Chesterton's Fence, Rule of 500, reduce complexity while preserving exact behavior | Code works but is harder to read or maintain than it should be |
-| [security-and-hardening](skills/security-and-hardening/SKILL.md) | OWASP Top 10 prevention, auth patterns, secrets management, dependency auditing, three-tier boundary system | Handling user input, auth, data storage, or external integrations |
-| [performance-optimization](skills/performance-optimization/SKILL.md) | Measure-first approach - Core Web Vitals targets, profiling workflows, bundle analysis, anti-pattern detection | Performance requirements exist or you suspect regressions |
-
-### Ship - Deploy with confidence
-
-| Skill | What It Does | Use When |
-|-------|-------------|----------|
-| [git-workflow-and-versioning](skills/git-workflow-and-versioning/SKILL.md) | Trunk-based development, atomic commits, change sizing (~100 lines), the commit-as-save-point pattern | Making any code change (always) |
-| [ci-cd-and-automation](skills/ci-cd-and-automation/SKILL.md) | Shift Left, Faster is Safer, feature flags, quality gate pipelines, failure feedback loops | Setting up or modifying build and deploy pipelines |
-| [deprecation-and-migration](skills/deprecation-and-migration/SKILL.md) | Code-as-liability mindset, compulsory vs advisory deprecation, migration patterns, zombie code removal | Removing old systems, migrating users, or sunsetting features |
-| [documentation-and-adrs](skills/documentation-and-adrs/SKILL.md) | Architecture Decision Records, API docs, inline documentation standards - document the *why* | Making architectural decisions, changing APIs, or shipping features |
-| [shipping-and-launch](skills/shipping-and-launch/SKILL.md) | Pre-launch checklists, feature flag lifecycle, staged rollouts, rollback procedures, monitoring setup | Preparing to deploy to production |
-
----
-
-## Reference Checklists
-
-Quick-reference material that skills pull in when needed:
-
-| Reference | Covers |
-|-----------|--------|
-| [testing-patterns.md](references/testing-patterns.md) | Test structure, naming, mocking, React/API/E2E examples, anti-patterns |
-| [security-checklist.md](references/security-checklist.md) | Pre-commit checks, auth, input validation, headers, CORS, OWASP Top 10 |
-| [performance-checklist.md](references/performance-checklist.md) | Core Web Vitals targets, frontend/backend checklists, measurement commands |
-| [accessibility-checklist.md](references/accessibility-checklist.md) | Keyboard nav, screen readers, visual design, ARIA, testing tools |
+No additional configuration needed. Skills discover themselves from the `skills/` directory.
 
 ---
 
 ## How Skills Work
 
-Every skill follows a consistent anatomy:
+Every skill follows the same anatomy:
 
 ```
 ┌─────────────────────────────────────────────────┐
@@ -155,29 +171,16 @@ Every skill follows a consistent anatomy:
 │  Rationalizations → Excuses + rebuttals         │
 │  Red Flags        → Signs something's wrong     │
 │  Verification     → Evidence requirements       │
+│  Beads Integration→ bd commands for this skill  │
 └─────────────────────────────────────────────────┘
 ```
 
 **Key design choices:**
 
-- **Process, not prose.** Skills are workflows agents follow, not reference docs they read. Each has steps, checkpoints, and exit criteria.
-- **Anti-rationalization.** Every skill includes a table of common excuses agents use to skip steps (e.g., "I'll add tests later") with documented counter-arguments.
-- **Verification is non-negotiable.** Every skill ends with evidence requirements - tests passing, build output, runtime data. "Seems right" is never sufficient.
-- **Progressive disclosure.** The `SKILL.md` is the entry point. Supporting references load only when needed, keeping token usage minimal.
-
----
-
-## Reference Checklists
-
-Quick-reference material that skills pull in when needed:
-
-| Reference | Covers |
-|-----------|--------|
-| [testing-patterns.md](references/testing-patterns.md) | Test structure, naming, mocking, React/API/E2E examples, anti-patterns |
-| [security-checklist.md](references/security-checklist.md) | Pre-commit checks, auth, input validation, headers, CORS, OWASP Top 10 |
-| [performance-checklist.md](references/performance-checklist.md) | Core Web Vitals targets, frontend/backend checklists, measurement commands |
-| [accessibility-checklist.md](references/accessibility-checklist.md) | Keyboard nav, screen readers, visual design, ARIA, testing tools |
-| [error-handling-patterns.md](references/error-handling-patterns.md) | Three-pattern error handling (fail fast, warn, ignore), decision tree, anti-patterns |
+- **Process, not prose.** Skills are workflows agents follow, not reference docs they read.
+- **Anti-rationalization.** Every skill includes a table of common excuses with documented counter-arguments.
+- **Verification is non-negotiable.** Every skill ends with evidence requirements. "Seems right" is never sufficient.
+- **Progressive disclosure.** The `SKILL.md` is the entry point. Supporting references load only when needed.
 
 ---
 
@@ -185,15 +188,15 @@ Quick-reference material that skills pull in when needed:
 
 ```
 agent-skills/
-├── skills/                            # 20 core skills (SKILL.md per directory)
+├── skills/                            # 20 core skills
 │   ├── idea-refine/                   #   Define
 │   ├── spec-driven-development/       #   Define
 │   ├── planning-and-task-breakdown/   #   Plan
 │   ├── incremental-implementation/    #   Build
+│   ├── test-driven-development/       #   Build
 │   ├── context-engineering/           #   Build
 │   ├── source-driven-development/     #   Build
 │   ├── frontend-ui-engineering/       #   Build
-│   ├── test-driven-development/       #   Build
 │   ├── api-and-interface-design/      #   Build
 │   ├── browser-testing-with-devtools/ #   Verify
 │   ├── debugging-and-error-recovery/  #   Verify
@@ -206,24 +209,66 @@ agent-skills/
 │   ├── deprecation-and-migration/     #   Ship
 │   ├── documentation-and-adrs/        #   Ship
 │   ├── shipping-and-launch/           #   Ship
-│   └── using-agent-skills/            #   Meta: how to use this pack
-├── references/                        # 5 supplementary checklists
+│   └── using-agent-skills/            #   Meta
+├── references/                        # Supplementary checklists
+│   ├── testing-patterns.md
+│   ├── security-checklist.md
+│   ├── performance-checklist.md
+│   ├── accessibility-checklist.md
+│   └── error-handling-patterns.md
 ├── AGENTS.md                          # OpenCode integration rules
-└── .beads/                            # Beads database (auto-created by bd init)
+├── README.md                          # This file
+└── .beads/                            # Beads database (auto-created)
 ```
 
 ---
 
-## Why Agent Skills?
+## Contributing
 
-AI coding agents default to the shortest path - which often means skipping specs, tests, security reviews, and the practices that make software reliable. Agent Skills gives agents structured workflows that enforce the same discipline senior engineers bring to production code.
+### Adding a New Skill
 
-Each skill encodes hard-won engineering judgment: *when* to write a spec, *what* to test, *how* to review, and *when* to ship. These aren't generic prompts - they're the kind of opinionated, process-driven workflows that separate production-quality work from prototype-quality work.
+```bash
+mkdir skills/your-skill-name
+cat > skills/your-skill-name/SKILL.md << 'EOF'
+---
+name: your-skill-name
+description: What it does. Use when [trigger condition].
+---
 
-Skills bake in best practices from Google's engineering culture — including concepts from [Software Engineering at Google](https://abseil.io/resources/swe-book) and Google's [engineering practices guide](https://google.github.io/eng-practices/). You'll find Hyrum's Law in API design, the Beyonce Rule and test pyramid in testing, change sizing and review speed norms in code review, Chesterton's Fence in simplification, trunk-based development in git workflow, Shift Left and feature flags in CI/CD, and a dedicated deprecation skill treating code as a liability. These aren't abstract principles — they're embedded directly into the step-by-step workflows agents follow.
+# Your Skill Title
+
+## Overview
+## When to Use
+## Process
+## Rationalizations
+## Red Flags
+## Verification
+## Beads Integration
+EOF
+```
+
+**Naming:**
+- Directory: `kebab-case`
+- File: `SKILL.md` (always uppercase)
+- Scripts: `kebab-case.sh`
+
+**Requirements:**
+- Keep under 500 lines
+- Include anti-rationalization table
+- Include verification checklist
+- Include beads integration section
+- Reference scripts over inline code when possible
+
+---
+
+## What's Next?
+
+- [ ] Add more specialized skills (database-design, event-driven-architecture)
+- [ ] Build beads CLI scripts for common skill workflows
+- [ ] Create reference material for framework-specific patterns
 
 ---
 
 ## License
 
-MIT - use these skills in your projects, teams, and tools.
+MIT — use these skills in your projects, teams, and tools.
