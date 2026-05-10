@@ -18,7 +18,7 @@ Agent Skills fixes this by giving agents **structured workflows** that enforce t
 
 ## What's Inside
 
-20 skills organized across the full development lifecycle:
+21 skills organized across the full development lifecycle:
 
 ### Define — Figure out what to build
 | Skill | What It Does |
@@ -63,6 +63,12 @@ Agent Skills fixes this by giving agents **structured workflows** that enforce t
 | [deprecation-and-migration](skills/deprecation-and-migration/SKILL.md) | Code-as-liability mindset, compulsory vs advisory deprecation, zombie code removal |
 | [documentation-and-adrs](skills/documentation-and-adrs/SKILL.md) | Architecture Decision Records, API docs, inline documentation — document the *why* |
 | [shipping-and-launch](skills/shipping-and-launch/SKILL.md) | Pre-launch checklists, feature flag lifecycle, staged rollouts, rollback procedures |
+
+### Meta — Extend the system
+| Skill | What It Does |
+|-------|-------------|
+| [using-agent-skills](skills/using-agent-skills/SKILL.md) | Discovers and invokes agent skills — the meta-skill governing how all other skills are found and activated |
+| [skill_add](skills/skill_add.md) | Integrates new skills into the repository — adapts raw skill content to repo style, registers across all required locations |
 
 ---
 
@@ -188,7 +194,7 @@ Every skill follows the same anatomy:
 
 ```
 agent-skills/
-├── skills/                            # 20 core skills
+├── skills/                            # 21 skills + integration framework
 │   ├── idea-refine/                   #   Define
 │   ├── spec-driven-development/       #   Define
 │   ├── planning-and-task-breakdown/   #   Plan
@@ -209,7 +215,10 @@ agent-skills/
 │   ├── deprecation-and-migration/     #   Ship
 │   ├── documentation-and-adrs/        #   Ship
 │   ├── shipping-and-launch/           #   Ship
-│   └── using-agent-skills/            #   Meta
+│   ├── using-agent-skills/            #   Meta
+│   └── skill_add.md                   #   Meta — integration framework
+├── scripts/                           # Repo-level scripts
+│   └── skill-sync.sh                  #   Mirror sync between skills/ and .opencode/skills/
 ├── references/                        # Supplementary checklists
 │   ├── testing-patterns.md
 │   ├── security-checklist.md
