@@ -314,6 +314,7 @@ Part of code review is dependency review:
 
 - For detailed security review guidance, see `references/security-checklist.md`
 - For performance review checks, see `references/performance-checklist.md`
+- For error handling pattern review, see `references/error-handling-patterns.md`
 
 ## Common Rationalizations
 

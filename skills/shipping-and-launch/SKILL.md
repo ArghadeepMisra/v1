@@ -222,6 +222,36 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 });
 ```
 
+### Observability Setup
+
+Before launch, ensure observability is configured:
+
+**Metrics to collect:**
+- Application: error rate, response time (p50/p95/p99), request volume, active users
+- Infrastructure: CPU, memory, disk, database connections, queue depth
+- Client: Core Web Vitals, JS errors, API error rates, page load time
+
+**Log aggregation:**
+- Centralized logging (structured JSON format)
+- Correlation IDs across services
+- Error logs include stack traces and context
+- Log levels: ERROR for Pattern A, WARN for Pattern B
+
+**Alerting thresholds:**
+| Metric | Warning | Critical |
+|--------|---------|----------|
+| Error rate | > 0.1% | > 1% |
+| P95 latency | > 2x baseline | > 3x baseline |
+| Error budget | 50% consumed | 100% consumed |
+
+**Dashboards:**
+- Real-time error rate and latency
+- Feature flag status and canary metrics
+- Business metrics (conversion, engagement)
+- Infrastructure health
+
+For error handling patterns and when to log vs fail, see `references/error-handling-patterns.md`.
+
 ### Post-Launch Verification
 
 In the first hour after launch:

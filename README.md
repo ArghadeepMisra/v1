@@ -139,6 +139,20 @@ Every skill follows a consistent anatomy:
 
 ---
 
+## Reference Checklists
+
+Quick-reference material that skills pull in when needed:
+
+| Reference | Covers |
+|-----------|--------|
+| [testing-patterns.md](references/testing-patterns.md) | Test structure, naming, mocking, React/API/E2E examples, anti-patterns |
+| [security-checklist.md](references/security-checklist.md) | Pre-commit checks, auth, input validation, headers, CORS, OWASP Top 10 |
+| [performance-checklist.md](references/performance-checklist.md) | Core Web Vitals targets, frontend/backend checklists, measurement commands |
+| [accessibility-checklist.md](references/accessibility-checklist.md) | Keyboard nav, screen readers, visual design, ARIA, testing tools |
+| [error-handling-patterns.md](references/error-handling-patterns.md) | Three-pattern error handling (fail fast, warn, ignore), decision tree, anti-patterns |
+
+---
+
 ## Project Structure
 
 ```
@@ -165,7 +179,7 @@ agent-skills/
 │   ├── documentation-and-adrs/        #   Ship
 │   ├── shipping-and-launch/           #   Ship
 │   └── using-agent-skills/            #   Meta: how to use this pack
-├── references/                        # 4 supplementary checklists
+├── references/                        # 5 supplementary checklists
 └── AGENTS.md                          # OpenCode integration rules
 ```
 
