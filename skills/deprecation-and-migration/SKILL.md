@@ -194,6 +194,20 @@ Zombie code is code that nobody owns but everybody depends on. It's not actively
 - Deprecation without measuring current usage
 - Removing code without verifying zero active consumers
 
+## Beads Integration
+
+Track deprecation work in beads:
+```bash
+# Deprecation epic
+bd create "Deprecate: [system]" -t epic -p 1 --json
+
+# Migration task
+bd create "Migrate: [consumer]" -t task -p 2 --json
+
+# Zombie code removal
+bd close <id> --reason "Zero active usage confirmed" --json
+```
+
 ## Verification
 
 After completing a deprecation:

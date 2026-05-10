@@ -337,6 +337,20 @@ For detailed performance checklists, optimization commands, and anti-pattern ref
 - No performance monitoring in production
 - `React.memo` and `useMemo` everywhere (overusing is as bad as underusing)
 
+## Beads Integration
+
+Track performance work in beads:
+```bash
+# Performance regression
+bd create "Perf: [description]" -t bug -p 1 --json
+
+# Optimization results
+bd remember "Perf: [metric] improved by [X]% via [change]"
+
+# Budget violations
+bd create "Perf: Budget exceeded" -t bug -p 0 --json
+```
+
 ## Verification
 
 After any performance-related change:

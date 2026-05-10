@@ -35,7 +35,18 @@ ADRs capture the reasoning behind significant technical decisions. They're the h
 
 ### ADR Template
 
-Store ADRs in `docs/decisions/` with sequential numbering:
+Store ADRs in `docs/decisions/` with sequential numbering. Link each ADR to a beads issue:
+
+```bash
+# Create ADR tracking issue
+bd create "ADR: [Decision]" -t task -p 2 --json
+
+# Remember the decision for cross-session retrieval
+bd remember "ADR-[N]: [Decision] - [Rationale]"
+
+# Link to epic
+bd update <adr-id> --deps parent:[epic-id] --json
+```
 
 ```markdown
 # ADR-001: Use PostgreSQL for primary database

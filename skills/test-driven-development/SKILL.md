@@ -24,12 +24,12 @@ Write a failing test before writing the code that makes it pass. For bug fixes, 
 ## The TDD Cycle
 
 ```
-    RED                GREEN              REFACTOR
- Write a test    Write minimal code    Clean up the
- that fails  ──→  to make it pass  ──→  implementation  ──→  (repeat)
-      │                  │                    │
-      ▼                  ▼                    ▼
-   Test FAILS        Test PASSES         Tests still PASS
+    CLAIM               RED                GREEN              REFACTOR
+ bd update       Write a test     Write minimal code    Clean up the
+ --claim    ──→  that fails   ──→  to make it pass  ──→  implementation  ──→  bd close
+ (lock task)        │                  │                    │               (complete)
+                   ▼                  ▼                    ▼
+                Test FAILS        Test PASSES         Tests still PASS
 ```
 
 ### Step 1: RED — Write a Failing Test
@@ -83,8 +83,17 @@ Run tests after every refactor step to confirm nothing broke.
 
 When a bug is reported, **do not start by trying to fix it.** Start by writing a test that reproduces it.
 
+**Create a beads issue first:**
+```bash
+bd create "Bug: [description]" -t bug -p [priority] \
+  --deps discovered-from:<parent-epic> --json
+```
+
 ```
 Bug report arrives
+       │
+       ▼
+  Create beads issue: bd create -t bug
        │
        ▼
   Write a test that demonstrates the bug
@@ -100,6 +109,9 @@ Bug report arrives
        │
        ▼
   Run full test suite (no regressions)
+       │
+       ▼
+  Close beads issue: bd close --reason "Fixed: [root cause]"
 ```
 
 **Example:**

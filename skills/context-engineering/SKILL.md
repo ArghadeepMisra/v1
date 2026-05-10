@@ -23,6 +23,8 @@ Structure context from most persistent to most transient:
 
 ```
 ┌──────────────────────────────────────────────┐
+│  0. Beads Memory (bd prime)                  │ ← Persistent across sessions
+├──────────────────────────────────────────────┤
 │  1. Rules Files (AGENTS.md, CLAUDE.md, etc.) │ ← Always loaded, project-wide
 ├──────────────────────────────────────────────┤
 │  2. Spec / Architecture Docs                 │ ← Loaded per feature/session
@@ -34,6 +36,31 @@ Structure context from most persistent to most transient:
 │  5. Conversation History                     │ ← Accumulates, compacts
 └──────────────────────────────────────────────┘
 ```
+
+### Level 0: Beads Memory
+
+At session start, load persistent context from beads:
+
+```bash
+# Load project memory and recent context
+bd prime
+
+# For specific task context
+bd show <task-id> --json | jq '.[0] | {id,title,metadata,description,notes}'
+```
+
+The `bd prime` output includes:
+- Project conventions and persistent memories (`bd remember`)
+- Recent closed issues and their outcomes
+- Ready work and dependency graph
+
+**Load task context from beads before editing:**
+```bash
+# Before editing, read the beads issue for full context
+bd show <task-id> --json | jq '.[0].description, .[0].notes'
+```
+
+This prevents context loss between sessions.
 
 ### Level 1: Rules Files
 

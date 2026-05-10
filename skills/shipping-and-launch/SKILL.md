@@ -19,6 +19,21 @@ Ship with confidence. The goal is not just to deploy — it's to deploy safely, 
 
 ## The Pre-Launch Checklist
 
+Track checklist items in beads:
+```bash
+# Create launch tracking issue
+bd create "Launch: [Feature]" -t epic -p 0 --json
+
+# Each checklist category is a sub-task
+bd create "Launch: Security checks" -t task -p 0 --deps parent:[launch-epic] --json
+bd create "Launch: Performance checks" -t task -p 0 --deps parent:[launch-epic] --json
+```
+
+Close checklist items as they pass:
+```bash
+bd close <security-check-id> --reason "All security checks passed" --json
+```
+
 ### Code Quality
 
 - [ ] All tests pass (unit, integration, e2e)

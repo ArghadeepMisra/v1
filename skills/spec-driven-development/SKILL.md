@@ -35,6 +35,19 @@ SPECIFY ──→ PLAN ──→ TASKS ──→ IMPLEMENT
 
 Start with a high-level vision. Ask the human clarifying questions until requirements are concrete.
 
+**Persist the spec in beads:**
+```bash
+# Create the epic for this feature
+bd create "Spec: [Project/Feature Name]" -t epic -p 1 \
+  --description="[Problem statement from spec]" --json
+```
+
+**Link related decisions:**
+```bash
+# For each major architectural decision
+bd remember "ADR: [Decision] - [Rationale]"
+```
+
 **Surface assumptions immediately.** Before writing any spec content, list what you're assuming:
 
 ```
@@ -140,6 +153,13 @@ With the validated spec, generate a technical implementation plan:
 
 The plan should be reviewable: the human should be able to read it and say "yes, that's the right approach" or "no, change X."
 
+**Break the plan into beads issues:**
+```bash
+# For each major component, create a task linked to the epic
+bd create "[Component] implementation" -t task -p 1 \
+  --deps parent:[epic-id] --json
+```
+
 ### Phase 3: Tasks
 
 Break the plan into discrete, implementable tasks:
@@ -198,3 +218,6 @@ Before proceeding to implementation, confirm:
 - [ ] Success criteria are specific and testable
 - [ ] Boundaries (Always/Ask First/Never) are defined
 - [ ] The spec is saved to a file in the repository
+- [ ] Epic created in beads with full spec context
+- [ ] Architectural decisions remembered via `bd remember`
+- [ ] Task breakdown persisted in beads dependency graph

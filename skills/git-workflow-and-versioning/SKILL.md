@@ -64,17 +64,17 @@ x1y2z3a Add task feature, fix sidebar, update deps, refactor utils
 
 ### 3. Descriptive Messages
 
-Commit messages explain the *why*, not just the *what*:
+Commit messages explain the *why*, not just the *what*. Reference beads issues in every commit:
 
 ```
-# Good: Explains intent
-feat: add email validation to registration endpoint
+# Good: Explains intent and references beads issue
+feat: add email validation to registration endpoint (bd-abc)
 
 Prevents invalid email formats from reaching the database.
 Uses Zod schema validation at the route handler level,
 consistent with existing validation patterns in auth.ts.
 
-# Bad: Describes what's obvious from the diff
+# Bad: No context
 update auth.ts
 ```
 

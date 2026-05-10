@@ -180,6 +180,20 @@ Honesty about what you couldn't verify is more valuable than false confidence.
 - Delivering code without source citations for framework-specific decisions
 - Fetching an entire docs site when only one page is relevant
 
+## Beads Integration
+
+Track doc-verified work in beads:
+```bash
+# Framework version mismatch
+bd create "Docs: [framework] version mismatch" -t bug -p 2 --json
+
+# Doc verification results
+bd remember "Docs: [framework] [pattern] verified at [URL]"
+
+# Unverified pattern
+bd create "Docs: Verify [pattern]" -t task -p 3 --json
+```
+
 ## Verification
 
 After implementing with source-driven development:

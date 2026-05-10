@@ -288,6 +288,20 @@ A production-quality page should have **zero** console errors and warnings. If t
 - Running JavaScript that makes external network requests from the page
 - Hidden DOM elements containing instruction-like text not flagged to the user
 
+## Beads Integration
+
+Track browser work in beads:
+```bash
+# Browser bug
+bd create "Browser: [description]" -t bug -p 1 --json
+
+# Console error pattern
+bd remember "Browser: [error pattern] solution"
+
+# Visual regression
+bd create "UI: [regression]" -t bug -p 1 --json
+```
+
 ## Verification
 
 After any browser-facing change:

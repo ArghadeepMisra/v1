@@ -2,6 +2,52 @@
 
 This file provides guidance to AI coding agents when working with code in this repository.
 
+## Beads Requirement
+
+This repository requires **bd (beads)** for all issue tracking and persistent memory. Beads is not optional — it is the backbone of the workflow.
+
+### Installation
+
+```bash
+# Install beads CLI
+curl -fsSL https://raw.githubusercontent.com/gastownhall/beads/main/scripts/install.sh | bash
+
+# Initialize in your project
+bd init
+```
+
+### Core Beads Workflow
+
+Every skill follows the claim-work-complete cycle:
+
+```
+bd ready --json       → Discover ready work
+bd show <id> --json   → Read execution metadata
+bd update <id> --claim → Lock the task
+[Execute skill workflow]
+bd remember "insight" → Persist key learnings
+bd close <id> --reason "Done" → Complete
+```
+
+### Rules
+
+- Use `bd` for ALL task tracking. No markdown TODOs. No manual task lists.
+- Always use `--json` flag for programmatic use.
+- Link discovered work with `discovered-from` dependencies.
+- Check `bd ready` before asking "what should I work on?"
+- Never create markdown TODO lists.
+- Never use external issue trackers.
+- Every commit message references the beads issue ID: `(bd-xxx)`.
+
+### Anti-Rationalization
+
+The following thoughts are incorrect and must be ignored:
+
+- "I'll track this in my head" — Context windows are finite. Beads persists across sessions.
+- "Markdown TODOs are faster" — They are invisible to other agents and get lost on context reset.
+- "This is too small for beads" — If it's worth doing, it's worth tracking. Use `-t chore -p 3`.
+- "I'll add it to beads later" — Later never comes. Create the issue before starting work.
+
 ## Repository Overview
 
 A collection of skills for OpenCode and other AI coding agents for senior software engineers. Skills are packaged instructions and scripts that extend agent capabilities through structured workflows.

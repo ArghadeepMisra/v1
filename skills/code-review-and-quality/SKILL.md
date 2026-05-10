@@ -166,6 +166,21 @@ Label every comment with its severity so the author knows what's required vs opt
 
 This prevents authors from treating all feedback as mandatory and wasting time on optional suggestions.
 
+**For Critical findings, create beads issues:**
+```bash
+# Security vulnerability
+bd create "Security: [description]" -t bug -p 0 --json
+
+# Performance regression
+bd create "Perf: [description]" -t bug -p 1 --json
+```
+
+**Link findings to original work:**
+```bash
+bd create "Review finding: [description]" -t task -p 2 \
+  --deps discovered-from:<original-task-id> --json
+```
+
 ### Step 5: Verify the Verification
 
 Check the author's verification story:

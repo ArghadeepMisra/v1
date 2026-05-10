@@ -54,6 +54,12 @@ Database schema
 
 Implementation order follows the dependency graph bottom-up: build foundations first.
 
+**Map dependencies in beads:**
+```bash
+# After creating tasks, link dependencies
+bd dep add [child-task-id] [parent-task-id]
+```
+
 ### Step 3: Slice Vertically
 
 Instead of building all the database, then all the API, then all the UI — build one complete feature path at a time:
@@ -82,6 +88,7 @@ Each task follows this structure:
 
 ```markdown
 ## Task [N]: [Short descriptive title]
+**beads_id:** bd-xxxxx (auto-created)
 
 **Description:** One paragraph explaining what this task accomplishes.
 
@@ -93,8 +100,13 @@ Each task follows this structure:
 - [ ] Tests pass: `npm test -- --grep "feature-name"`
 - [ ] Build succeeds: `npm run build`
 - [ ] Manual check: [description of what to verify]
+- [ ] `bd show <id>` status updated to in_progress/closed
 
-**Dependencies:** [Task numbers this depends on, or "None"]
+**Beads metadata:**
+- **Type:** task|bug|feature|chore
+- **Priority:** 0-4
+- **Parent:** [epic-id]
+- **Dependencies:** [task-ids]
 
 **Files likely touched:**
 - `src/path/to/file.ts`
@@ -221,3 +233,6 @@ Before starting implementation, confirm:
 - [ ] No task touches more than ~5 files
 - [ ] Checkpoints exist between major phases
 - [ ] The human has reviewed and approved the plan
+- [ ] All tasks created in beads with correct dependencies
+- [ ] `bd ready` shows the task dependency graph is correct
+- [ ] No orphaned tasks (all have parent epic or linked discovery)

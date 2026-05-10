@@ -377,6 +377,20 @@ jobs:
 - Secrets stored in code or CI config files (not secrets manager)
 - Long CI times with no optimization effort
 
+## Beads Integration
+
+Track CI/CD work in beads:
+```bash
+# CI failure
+bd create "CI: [failure description]" -t chore -p 1 --json
+
+# Pipeline change
+bd create "CI: [change description]" -t task -p 2 --json
+
+# Deployment issue
+bd create "Deploy: [issue]" -t bug -p 0 --json
+```
+
 ## Verification
 
 After setting up or modifying CI:

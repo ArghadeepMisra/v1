@@ -16,9 +16,18 @@ When a task arrives, identify the development phase and apply the corresponding 
 ```
 Task arrives
     │
+    ├── Load context: bd prime
+    │
+    ├── Discover work: bd ready --json
+    │
+    ├── Claim task: bd update <id> --claim
+    │
     ├── Vague idea/need refinement? ──→ idea-refine
+    │                                     └── bd create "Refine: [idea]" -t task -p 2
     ├── New project/feature/change? ──→ spec-driven-development
+    │                                     └── bd create "Spec: [feature]" -t epic -p 1
     ├── Have a spec, need tasks? ──────→ planning-and-task-breakdown
+    │                                     └── bd create "[Task]" -t task --deps parent:[epic]
     ├── Implementing code? ────────────→ incremental-implementation
     │   ├── UI work? ─────────────────→ frontend-ui-engineering
     │   ├── API work? ────────────────→ api-and-interface-design
@@ -27,6 +36,7 @@ Task arrives
     ├── Writing/running tests? ────────→ test-driven-development
     │   └── Browser-based? ───────────→ browser-testing-with-devtools
     ├── Something broke? ──────────────→ debugging-and-error-recovery
+    │                                     └── bd create "Bug: [description]" -t bug -p 1
     ├── Reviewing code? ───────────────→ code-review-and-quality
     │   ├── Security concerns? ───────→ security-and-hardening
     │   └── Performance concerns? ────→ performance-optimization
@@ -104,6 +114,28 @@ Your job is surgical precision, not unsolicited renovation.
 ### 6. Verify, Don't Assume
 
 Every skill includes a verification step. A task is not complete until verification passes. "Seems right" is never sufficient — there must be evidence (passing tests, build output, runtime data).
+
+### 7. Persist Everything in Beads
+
+Every skill invocation follows the claim-work-complete cycle. After completing any skill:
+
+1. **Close the beads issue:**
+   ```bash
+   bd close <id> --reason "Done" --json
+   ```
+
+2. **Remember key insights:**
+   ```bash
+   bd remember "Key learning from this task: [insight]"
+   ```
+
+3. **Link discovered work:**
+   ```bash
+   bd create "Follow-up: [description]" -t task -p 2 \
+     --deps discovered-from:<parent-id> --json
+   ```
+
+Never let work exist only in conversation history. Beads is the source of truth. Check `bd ready` before starting any new task.
 
 ## Failure Modes to Avoid
 

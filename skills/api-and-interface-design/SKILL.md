@@ -281,6 +281,20 @@ function getTask(id: TaskId): Promise<Task> { ... }
 - Verbs in REST URLs (`/api/createTask`, `/api/getUsers`)
 - Third-party API responses used without validation or sanitization
 
+## Beads Integration
+
+Track API work in beads:
+```bash
+# API changes
+bd create "API: [description]" -t feature -p 1 --json
+
+# Breaking changes
+bd create "API: [breaking change]" -t epic -p 0 --json
+
+# Versioning decisions
+bd remember "API: [versioning decision rationale]"
+```
+
 ## Verification
 
 After designing an API:

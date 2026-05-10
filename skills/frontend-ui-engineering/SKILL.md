@@ -315,6 +315,20 @@ For detailed accessibility requirements and testing tools, see `references/acces
 - Color as the sole indicator of state (red/green without text or icons)
 - Generic "AI look" (purple gradients, oversized cards, stock layouts)
 
+## Beads Integration
+
+Track UI work in beads:
+```bash
+# UI bugs
+bd create "Bug: [description]" -t bug -p 1 --json
+
+# Accessibility issues
+bd create "a11y: [description]" -t bug -p 1 --json
+
+# Design system decisions
+bd remember "Design: [pattern/convention established]"
+```
+
 ## Verification
 
 After building UI:

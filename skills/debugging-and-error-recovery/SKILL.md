@@ -41,6 +41,17 @@ Work through these steps in order. Do not skip steps.
 
 Make the failure happen reliably. If you can't reproduce it, you can't fix it with confidence.
 
+**If this is a new bug, create a beads issue before debugging:**
+```bash
+bd create "Bug: [brief description]" -t bug -p [priority] --json
+bd update <id> --claim --json
+```
+
+**If debugging an existing beads issue:**
+```bash
+bd show <id> --json | jq '.[0] | {id,title,description,notes}'
+```
+
 ```
 Can you reproduce the failure?
 ├── YES → Proceed to Step 2
@@ -138,6 +149,12 @@ Ask: "Why does this happen?" until you reach the actual cause, not just where it
 ### Step 5: Guard Against Recurrence
 
 Write a test that catches this specific failure:
+
+**After adding the regression test, close the beads issue:**
+```bash
+bd close <id> --reason "Fixed: [root cause summary]" --json
+bd remember "Guard: [what test prevents recurrence]"
+```
 
 ```typescript
 // The bug: task titles with special characters broke the search

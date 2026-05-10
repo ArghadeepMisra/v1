@@ -39,6 +39,34 @@ No additional installation is required. Skills are discovered automatically from
 
 ---
 
+## Beads Setup (Required)
+
+This skill pack requires **bd (beads)** for persistent task tracking. Every skill automatically creates, updates, and closes beads issues as part of its workflow.
+
+### Installation
+
+```bash
+# Install beads CLI
+curl -fsSL https://raw.githubusercontent.com/gastownhall/beads/main/scripts/install.sh | bash
+
+# Initialize in your project
+bd init
+```
+
+### How It Works
+
+1. **Discover work:** `bd ready --json` shows unblocked tasks
+2. **Claim task:** `bd update <id> --claim` locks it for you
+3. **Execute skill:** Follow the skill workflow (spec → plan → build → verify → review → ship)
+4. **Persist insights:** `bd remember "key learning"` saves context across sessions
+5. **Complete:** `bd close <id> --reason "Done"` marks it finished
+
+### Why Beads + Skills?
+
+Skills encode the *how* (workflows, quality gates, anti-patterns). Beads provides the *what* and *when* (what needs doing, what depends on what, what's already done). Together they create a fully traceable, persistent engineering system that survives session resets and enables multi-agent coordination.
+
+---
+
 ## All 20 Skills
 
 The development lifecycle is encoded implicitly. Under the hood, tasks activate these 20 skills — each one a structured workflow with steps, verification gates, and anti-rationalization tables. You can also reference any skill directly.
@@ -180,7 +208,8 @@ agent-skills/
 │   ├── shipping-and-launch/           #   Ship
 │   └── using-agent-skills/            #   Meta: how to use this pack
 ├── references/                        # 5 supplementary checklists
-└── AGENTS.md                          # OpenCode integration rules
+├── AGENTS.md                          # OpenCode integration rules
+└── .beads/                            # Beads database (auto-created by bd init)
 ```
 
 ---

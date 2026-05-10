@@ -39,7 +39,11 @@ For each slice:
 2. **Test** — run the test suite (or write a test if none exists)
 3. **Verify** — confirm the slice works as expected (tests pass, build succeeds, manual check)
 4. **Commit** -- save your progress with a descriptive message (see `git-workflow-and-versioning` for atomic commit guidance)
-5. **Move to the next slice** — carry forward, don't restart
+5. **Track progress** — update beads with progress notes:
+   ```bash
+   bd update <task-id> --notes "Slice N complete: [what was done]"
+   ```
+6. **Move to the next slice** — carry forward, don't restart
 
 ## Slicing Strategies
 
@@ -85,6 +89,15 @@ Slice 3: Add offline support and reconnection
 ```
 
 If Slice 1 fails, you discover it before investing in Slices 2 and 3.
+
+## Claim Your Task
+
+Before implementing, lock the task in beads:
+```bash
+bd update <task-id> --claim --json
+```
+
+This prevents duplicate work in multi-agent environments.
 
 ## Implementation Rules
 
@@ -180,6 +193,17 @@ Each increment should be independently revertable:
 - Database migrations should have corresponding rollback migrations
 - Avoid deleting something in one commit and replacing it in the same commit — separate them
 
+### Rule 6: Track Discovered Work
+
+If new work is discovered during implementation, create a beads issue immediately:
+
+```bash
+bd create "Discovered: [description]" -t task -p 2 \
+  --deps discovered-from:<current-task-id> --json
+```
+
+This prevents discovered work from being lost when the session ends.
+
 ## Working with Agents
 
 When directing an agent to implement incrementally:
@@ -243,3 +267,8 @@ After completing all increments for a task:
 - [ ] The build is clean
 - [ ] The feature works end-to-end as specified
 - [ ] No uncommitted changes remain
+- [ ] Task was claimed via `bd update --claim` before starting
+- [ ] Progress tracked via `bd update --notes` during implementation
+- [ ] Discovered work linked via `discovered-from` dependencies
+- [ ] Task closed via `bd close` after all increments complete
+- [ ] Key insights remembered: `bd remember "[insight]"`

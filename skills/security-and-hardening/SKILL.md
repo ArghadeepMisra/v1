@@ -336,6 +336,20 @@ For detailed security checklists and pre-commit verification steps, see `referen
 - Stack traces or internal errors exposed to users
 - Dependencies with known critical vulnerabilities
 
+## Beads Integration
+
+Track security work in beads:
+```bash
+# Security finding
+bd create "Security: [description]" -t bug -p 0 --json
+
+# Audit results
+bd remember "Security: [finding and mitigation]"
+
+# Vulnerability fix
+bd close <id> --reason "Patched: [CVE/description]" --json
+```
+
 ## Verification
 
 After implementing security-relevant code:

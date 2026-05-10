@@ -165,6 +165,20 @@ Read `examples.md` in this skill directory for examples of what great ideation s
 - Ignoring existing codebase constraints when ideating inside a project
 - Jumping straight to Phase 3 output without running Phases 1 and 2
 
+## Beads Integration
+
+Track ideation in beads:
+```bash
+# Refined idea
+bd create "Idea: [concept]" -t epic -p 1 --json
+
+# MVP scope
+bd create "MVP: [scope]" -t task -p 1 --deps parent:[epic] --json
+
+# Key assumptions
+bd remember "Assumption: [what we validated] via [method]"
+```
+
 ## Verification
 
 After completing an ideation session:
